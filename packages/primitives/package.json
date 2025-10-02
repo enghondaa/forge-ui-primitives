@@ -1,0 +1,98 @@
+{
+  "name": "@forge-ui/primitives",
+  "version": "0.1.0",
+  "description": "Headless, accessible React component primitives",
+  "keywords": [
+    "react",
+    "headless",
+    "accessible",
+    "aria",
+    "typescript",
+    "unstyled",
+    "components"
+  ],
+  "homepage": "https://github.com/yourusername/forge-ui-primitives#readme",
+  "bugs": {
+    "url": "https://github.com/yourusername/forge-ui-primitives/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/forge-ui-primitives",
+    "directory": "packages/primitives"
+  },
+  "license": "MIT",
+  "author": "Your Name <you@example.com>",
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "types": "./dist/index.d.ts"
+    },
+    "./button": {
+      "import": "./dist/button.js",
+      "require": "./dist/button.cjs",
+      "types": "./dist/button.d.ts"
+    },
+    "./dialog": {
+      "import": "./dist/dialog.js",
+      "require": "./dist/dialog.cjs",
+      "types": "./dist/dialog.d.ts"
+    },
+    "./dropdown": {
+      "import": "./dist/dropdown.js",
+      "require": "./dist/dropdown.cjs",
+      "types": "./dist/dropdown.d.ts"
+    },
+    "./tabs": {
+      "import": "./dist/tabs.js",
+      "require": "./dist/tabs.cjs",
+      "types": "./dist/tabs.d.ts"
+    },
+    "./accordion": {
+      "import": "./dist/accordion.js",
+      "require": "./dist/accordion.cjs",
+      "types": "./dist/accordion.d.ts"
+    },
+    "./tooltip": {
+      "import": "./dist/tooltip.js",
+      "require": "./dist/tooltip.cjs",
+      "types": "./dist/tooltip.d.ts"
+    },
+    "./toggle": {
+      "import": "./dist/toggle.js",
+      "require": "./dist/toggle.cjs",
+      "types": "./dist/toggle.d.ts"
+    },
+    "./combobox": {
+      "import": "./dist/combobox.js",
+      "require": "./dist/combobox.cjs",
+      "types": "./dist/combobox.d.ts"
+    }
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "build:watch": "tsup --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "react": ">=17.0.0",
+    "react-dom": ">=17.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.79",
+    "@types/react-dom": "^18.2.25",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "tsup": "^8.0.2",
+    "typescript": "^5.4.3"
+  }
+}
