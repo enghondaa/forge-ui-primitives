@@ -184,6 +184,9 @@ export const DropdownContent = forwardRef<HTMLDivElement, DropdownContentProps>(
       onKeyDown?.(e);
       const items = getMenuItems(menuRef.current);
       const currentIndex = items.findIndex((item) => item === document.activeElement);
+      // RTL: swap ArrowLeft/ArrowRight semantics; vertical menus are always LTR-independent
+      const dir = document.documentElement.dir === 'rtl' ? -1 : 1;
+      void dir; // reserved for horizontal sub-menu support
 
       if (e.key === Keys.ArrowDown) {
         e.preventDefault();
