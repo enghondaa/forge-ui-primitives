@@ -141,6 +141,11 @@ interface DialogPortalProps {
   container?: HTMLElement | null;
 }
 
+/**
+ * Lazy-mounts the portal content — nothing is added to the DOM until the
+ * dialog is first opened. This avoids layout/style recalculations for
+ * dialogs that may never be opened in a session.
+ */
 export const DialogPortal: FC<DialogPortalProps> = ({ children, container }) => {
   const { open } = useDialogContext('Dialog.Portal');
   if (!open) return null;
