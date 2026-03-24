@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { useState } from 'react';
 import { Tabs } from './Tabs';
 
 const meta = {
@@ -25,26 +26,34 @@ const listStyle: React.CSSProperties = {
   marginBottom: '16px',
 };
 
-const triggerStyle = (selected: boolean): React.CSSProperties => ({
+const baseTriggerStyle: React.CSSProperties = {
   padding: '8px 16px',
   border: 'none',
   background: 'transparent',
   cursor: 'pointer',
-  borderBottom: selected ? '2px solid #0070f3' : '2px solid transparent',
   marginBottom: '-2px',
-  color: selected ? '#0070f3' : '#666',
-  fontWeight: selected ? 600 : 400,
   transition: 'all 0.15s',
-});
+};
 
-export const Default: Story = {
-  args: { children: null },
-  render: () => (
+const tabValues = ['profile', 'security', 'notifications'] as const;
+
+function DefaultDemo() {
+  const [selected, setSelected] = useState<string>('profile');
+  return (
     <div style={{ width: '480px' }}>
-      <Tabs defaultValue="profile">
+      <Tabs value={selected} onValueChange={setSelected}>
         <Tabs.List aria-label="Account settings" style={listStyle}>
-          {(['profile', 'security', 'notifications'] as const).map((v) => (
-            <Tabs.Trigger key={v} value={v} style={triggerStyle(false)}>
+          {tabValues.map((v) => (
+            <Tabs.Trigger
+              key={v}
+              value={v}
+              style={{
+                ...baseTriggerStyle,
+                borderBottom: selected === v ? '2px solid #0070f3' : '2px solid transparent',
+                color: selected === v ? '#0070f3' : '#666',
+                fontWeight: selected === v ? 600 : 400,
+              }}
+            >
               {v.charAt(0).toUpperCase() + v.slice(1)}
             </Tabs.Trigger>
           ))}
@@ -63,34 +72,38 @@ export const Default: Story = {
         </Tabs.Panel>
       </Tabs>
     </div>
-  ),
-};
+  );
+}
 
-export const Vertical: Story = {
-  args: { children: null },
-  render: () => (
+function VerticalDemo() {
+  const [selected, setSelected] = useState<string>('a');
+  return (
     <div style={{ display: 'flex', gap: '24px', width: '480px' }}>
-      <Tabs defaultValue="a" orientation="vertical">
+      <Tabs value={selected} onValueChange={setSelected} orientation="vertical">
         <Tabs.List
           aria-label="Vertical tabs example"
           style={{ display: 'flex', flexDirection: 'column', gap: '4px', minWidth: '120px' }}
         >
-          {['Option A', 'Option B', 'Option C'].map((label, i) => (
-            <Tabs.Trigger
-              key={i}
-              value={String.fromCharCode(97 + i)}
-              style={{
-                padding: '8px 12px',
-                border: '1px solid #dee2e6',
-                borderRadius: '6px',
-                background: '#fff',
-                cursor: 'pointer',
-                textAlign: 'left',
-              }}
-            >
-              {label}
-            </Tabs.Trigger>
-          ))}
+          {['Option A', 'Option B', 'Option C'].map((label, i) => {
+            const val = String.fromCharCode(97 + i);
+            return (
+              <Tabs.Trigger
+                key={val}
+                value={val}
+                style={{
+                  padding: '8px 12px',
+                  border: '1px solid',
+                  borderColor: selected === val ? '#0070f3' : '#dee2e6',
+                  borderRadius: '6px',
+                  background: selected === val ? '#e7f1ff' : '#fff',
+                  cursor: 'pointer',
+                  textAlign: 'left',
+                }}
+              >
+                {label}
+              </Tabs.Trigger>
+            );
+          })}
         </Tabs.List>
         <div style={{ flex: 1 }}>
           {['a', 'b', 'c'].map((v, i) => (
@@ -102,5 +115,15 @@ export const Vertical: Story = {
         </div>
       </Tabs>
     </div>
-  ),
+  );
+}
+
+export const Default: Story = {
+  args: { children: null },
+  render: () => <DefaultDemo />,
+};
+
+export const Vertical: Story = {
+  args: { children: null },
+  render: () => <VerticalDemo />,
 };

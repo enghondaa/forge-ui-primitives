@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { useState } from 'react';
 import { Toggle } from './Toggle';
 
 const meta = {
@@ -30,20 +31,30 @@ const getStyle = (pressed: boolean): React.CSSProperties => ({
   transition: 'all 0.15s',
 });
 
-export const Default: Story = {
-  args: { 'aria-label': 'Bold', children: 'B' },
-  render: (args) => (
-    <Toggle {...args} style={getStyle(false)}>
+function BoldToggle() {
+  const [on, setOn] = useState(false);
+  return (
+    <Toggle aria-label="Bold" onPressedChange={setOn} style={getStyle(on)}>
       Bold
     </Toggle>
-  ),
+  );
+}
+
+function ItalicToggle() {
+  const [on, setOn] = useState(true);
+  return (
+    <Toggle aria-label="Italic" pressed={on} onPressedChange={setOn} style={getStyle(on)}>
+      Italic
+    </Toggle>
+  );
+}
+
+export const Default: Story = {
+  args: { 'aria-label': 'Bold', children: 'B' },
+  render: () => <BoldToggle />,
 };
 
 export const Pressed: Story = {
   args: { pressed: true, 'aria-label': 'Italic', children: 'I' },
-  render: (args) => (
-    <Toggle {...args} style={getStyle(true)}>
-      Italic
-    </Toggle>
-  ),
+  render: () => <ItalicToggle />,
 };

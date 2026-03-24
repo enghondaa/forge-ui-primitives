@@ -154,7 +154,7 @@ DropdownTrigger.displayName = 'Dropdown.Trigger';
 
 export interface DropdownPortalProps {
   children: ReactNode;
-  container?: HTMLElement;
+  container?: HTMLElement | undefined;
 }
 
 export const DropdownPortal: FC<DropdownPortalProps> = ({ children, container }) => {
