@@ -185,7 +185,8 @@ export const AccordionTrigger = forwardRef<HTMLButtonElement, AccordionTriggerPr
       const triggers = Array.from(
         accordionEl.querySelectorAll<HTMLButtonElement>('[data-accordion-trigger]'),
       );
-      const idx = triggers.indexOf(rootRef.current!);
+      if (!rootRef.current) return;
+      const idx = triggers.indexOf(rootRef.current);
 
       if (e.key === Keys.ArrowDown) {
         e.preventDefault();

@@ -26,7 +26,7 @@ function ButtonInner<TElement extends ElementType = 'button'>(
   }: ButtonProps<TElement>,
   ref: ForwardedRef<Element>,
 ) {
-  const Component = (as ?? 'button') as ElementType;
+  const Component: ElementType = as ?? 'button';
   const isInert = isDisabled || isLoading;
 
   function handleClick(event: React.MouseEvent) {

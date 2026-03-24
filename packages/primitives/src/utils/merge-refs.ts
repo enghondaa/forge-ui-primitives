@@ -8,7 +8,7 @@ import type { MutableRefObject, Ref, RefCallback } from 'react';
  * const ref = mergeRefs(forwardedRef, localRef, anotherRef);
  * return <div ref={ref} />;
  */
-export function mergeRefs<T>(...refs: Array<Ref<T> | undefined>): RefCallback<T> {
+export function mergeRefs<T>(...refs: (Ref<T> | undefined)[]): RefCallback<T> {
   return (value: T | null) => {
     refs.forEach((ref) => {
       if (typeof ref === 'function') {

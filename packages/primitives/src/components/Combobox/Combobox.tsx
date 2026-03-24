@@ -326,7 +326,7 @@ export interface ComboboxOptionItemProps extends Omit<ComponentPropsWithoutRef<'
 }
 
 export const ComboboxOptionItem = forwardRef<HTMLLIElement, ComboboxOptionItemProps>(
-  ({ value, label, index, onClick, ...props }, ref) => {
+  ({ value, label, index: _index, onClick, onKeyDown, ...props }, ref) => {
     const { selectedValue, activeIndex, getOptionId, onSelect, filteredOptions } =
       useComboboxContext('Combobox.Option');
 
@@ -335,6 +335,7 @@ export const ComboboxOptionItem = forwardRef<HTMLLIElement, ComboboxOptionItemPr
 
     const isSelected = selectedValue === value;
     const isActive = activeIndex === filteredIndex;
+    const option = filteredOptions[filteredIndex];
 
     return (
       <li
@@ -345,7 +346,11 @@ export const ComboboxOptionItem = forwardRef<HTMLLIElement, ComboboxOptionItemPr
         data-active={isActive || undefined}
         onClick={(e) => {
           onClick?.(e);
-          onSelect(filteredOptions[filteredIndex]!);
+          if (option) onSelect(option);
+        }}
+        onKeyDown={(e) => {
+          onKeyDown?.(e);
+          if (e.key === 'Enter' && option) onSelect(option);
         }}
         {...props}
       >
@@ -358,12 +363,12 @@ export const ComboboxOptionItem = forwardRef<HTMLLIElement, ComboboxOptionItemPr
 ComboboxOptionItem.displayName = 'Combobox.Option';
 
 
-export interface ComboboxEmptyProps extends ComponentPropsWithoutRef<'li'> {}
+export type ComboboxEmptyProps = ComponentPropsWithoutRef<'li'>;
 
 export const ComboboxEmpty = forwardRef<HTMLLIElement, ComboboxEmptyProps>((props, ref) => {
   const { filteredOptions } = useComboboxContext('Combobox.Empty');
   if (filteredOptions.length > 0) return null;
-  return <li ref={ref} role="option" aria-disabled="true" {...props} />;
+  return <li ref={ref} role="option" aria-selected={false} aria-disabled="true" {...props} />;
 });
 
 ComboboxEmpty.displayName = 'Combobox.Empty';

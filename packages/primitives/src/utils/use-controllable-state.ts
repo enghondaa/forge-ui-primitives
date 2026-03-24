@@ -1,10 +1,10 @@
 import { useCallback, useRef, useState } from 'react';
 
-type UseControllableStateParams<T> = {
+interface UseControllableStateParams<T> {
   value?: T | undefined;
   defaultValue?: T | undefined;
   onChange?: ((value: T) => void) | undefined;
-};
+}
 
 /**
  * Manages state that can be either controlled (externally managed) or

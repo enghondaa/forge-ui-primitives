@@ -1,5 +1,4 @@
 import { render, screen, waitFor, act } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import { describe, expect, it } from 'vitest';
 import { Tooltip } from './Tooltip';
 
@@ -21,9 +20,8 @@ describe('Tooltip', () => {
   });
 
   it('shows on focus', async () => {
-    const user = userEvent.setup({ delay: null });
     render(<TestTooltip />);
-    await act(async () => {
+    act(() => {
       screen.getByRole('button', { name: 'Hover me' }).focus();
     });
     await waitFor(() =>
@@ -32,19 +30,18 @@ describe('Tooltip', () => {
   });
 
   it('hides on blur', async () => {
-    const user = userEvent.setup({ delay: null });
     render(<TestTooltip />);
     const trigger = screen.getByRole('button', { name: 'Hover me' });
-    await act(async () => { trigger.focus(); });
+    act(() => { trigger.focus(); });
     await waitFor(() => expect(screen.queryByRole('tooltip')).toBeInTheDocument());
-    await act(async () => { trigger.blur(); });
+    act(() => { trigger.blur(); });
     await waitFor(() => expect(screen.queryByRole('tooltip')).not.toBeInTheDocument());
   });
 
   it('trigger has aria-describedby pointing to tooltip id', async () => {
     render(<TestTooltip />);
     const trigger = screen.getByRole('button', { name: 'Hover me' });
-    await act(async () => { trigger.focus(); });
+    act(() => { trigger.focus(); });
     await waitFor(() => {
       const tooltip = screen.getByRole('tooltip');
       expect(trigger).toHaveAttribute('aria-describedby', tooltip.id);
@@ -53,7 +50,7 @@ describe('Tooltip', () => {
 
   it('tooltip has role="tooltip"', async () => {
     render(<TestTooltip />);
-    await act(async () => {
+    act(() => {
       screen.getByRole('button').focus();
     });
     await waitFor(() => {

@@ -7,7 +7,6 @@ import {
   useRef,
   type ComponentPropsWithoutRef,
   type FC,
-  type PropsWithChildren,
   type ReactNode,
 } from 'react';
 import { createPortal } from 'react-dom';
@@ -23,6 +22,7 @@ interface DialogContextValue {
   titleId: string;
   descriptionId: string;
   onClose: () => void;
+  closeOnOverlayClick: boolean;
 }
 
 const DialogContext = createContext<DialogContextValue | null>(null);
@@ -87,7 +87,7 @@ export const DialogRoot: FC<DialogRootProps> = ({
   }, [open, closeOnEscape, onClose]);
 
   return (
-    <DialogContext.Provider value={{ open, titleId, descriptionId, onClose }}>
+    <DialogContext.Provider value={{ open, titleId, descriptionId, onClose, closeOnOverlayClick }}>
       {children}
     </DialogContext.Provider>
   );
@@ -96,7 +96,7 @@ export const DialogRoot: FC<DialogRootProps> = ({
 DialogRoot.displayName = 'Dialog';
 
 
-export interface DialogTriggerProps extends ComponentPropsWithoutRef<'button'> {}
+export type DialogTriggerProps = ComponentPropsWithoutRef<'button'>;
 
 export const DialogTrigger = forwardRef<HTMLButtonElement, DialogTriggerProps>(
   ({ onClick, ...props }, ref) => {
@@ -141,15 +141,15 @@ export const DialogPortal: FC<DialogPortalProps> = ({ children, container }) => 
 DialogPortal.displayName = 'Dialog.Portal';
 
 
-export interface DialogOverlayProps extends ComponentPropsWithoutRef<'div'> {}
+export type DialogOverlayProps = ComponentPropsWithoutRef<'div'>;
 
 export const DialogOverlay = forwardRef<HTMLDivElement, DialogOverlayProps>(
   ({ onClick, ...props }, ref) => {
-    const { onClose } = useDialogContext('Dialog.Overlay');
+    const { onClose, closeOnOverlayClick } = useDialogContext('Dialog.Overlay');
 
     function handleClick(e: React.MouseEvent<HTMLDivElement>) {
       onClick?.(e);
-      if (e.target === e.currentTarget) onClose();
+      if (closeOnOverlayClick && e.target === e.currentTarget) onClose();
     }
 
     return (
@@ -207,10 +207,12 @@ DialogContent.displayName = 'Dialog.Content';
 
 export type DialogTitleProps = ComponentPropsWithoutRef<'h2'>;
 
-export const DialogTitle = forwardRef<HTMLHeadingElement, DialogTitleProps>((props, ref) => {
-  const { titleId } = useDialogContext('Dialog.Title');
-  return <h2 ref={ref} id={titleId} {...props} />;
-});
+export const DialogTitle = forwardRef<HTMLHeadingElement, DialogTitleProps>(
+  ({ children, ...props }, ref) => {
+    const { titleId } = useDialogContext('Dialog.Title');
+    return <h2 ref={ref} id={titleId} {...props}>{children}</h2>;
+  },
+);
 
 DialogTitle.displayName = 'Dialog.Title';
 

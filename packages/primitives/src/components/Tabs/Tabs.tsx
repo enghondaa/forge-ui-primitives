@@ -101,6 +101,7 @@ export const TabsList = forwardRef<HTMLDivElement, TabsListProps>(
       <div
         ref={ref ?? listRef}
         role="tablist"
+        tabIndex={-1}
         aria-orientation={orientation}
         onKeyDown={handleKeyDown}
         {...props}

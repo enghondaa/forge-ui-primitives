@@ -86,7 +86,7 @@ export const TooltipRoot: FC<TooltipRootProps> = ({
 TooltipRoot.displayName = 'Tooltip';
 
 
-export interface TooltipTriggerProps extends ComponentPropsWithoutRef<'button'> {}
+export type TooltipTriggerProps = ComponentPropsWithoutRef<'button'>;
 
 export const TooltipTrigger = forwardRef<HTMLButtonElement, TooltipTriggerProps>(
   ({ onMouseEnter, onMouseLeave, onFocus, onBlur, ...props }, _ref) => {
