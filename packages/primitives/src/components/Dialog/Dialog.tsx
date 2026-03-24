@@ -37,13 +37,13 @@ function useDialogContext(componentName: string): DialogContextValue {
 
 
 export interface DialogRootProps {
-  open?: boolean;
-  defaultOpen?: boolean;
-  onOpenChange?: (open: boolean) => void;
+  open?: boolean | undefined;
+  defaultOpen?: boolean | undefined;
+  onOpenChange?: ((open: boolean) => void) | undefined;
   /** @default true */
-  closeOnEscape?: boolean;
+  closeOnEscape?: boolean | undefined;
   /** @default true */
-  closeOnOverlayClick?: boolean;
+  closeOnOverlayClick?: boolean | undefined;
   children: ReactNode;
 }
 
@@ -126,7 +126,7 @@ export const DialogTrigger = forwardRef<HTMLButtonElement, DialogTriggerProps>(
 DialogTrigger.displayName = 'Dialog.Trigger';
 
 
-interface DialogPortalProps {
+export interface DialogPortalProps {
   children: ReactNode;
   container?: HTMLElement | null;
 }

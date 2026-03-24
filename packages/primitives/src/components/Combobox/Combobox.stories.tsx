@@ -65,6 +65,7 @@ const optionStyle = (isActive: boolean): React.CSSProperties => ({
 });
 
 export const Default: Story = {
+  args: { options: [], children: null },
   render: () => {
     const [value, setValue] = useState<string | null>(null);
     return (
@@ -99,6 +100,7 @@ export const Default: Story = {
 };
 
 export const AsyncSearch: Story = {
+  args: { options: [], children: null },
   render: () => {
     const [options, setOptions] = useState<ComboboxOption[]>([]);
     const [loading, setLoading] = useState(false);

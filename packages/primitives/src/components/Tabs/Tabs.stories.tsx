@@ -38,17 +38,14 @@ const triggerStyle = (selected: boolean): React.CSSProperties => ({
 });
 
 export const Default: Story = {
+  args: { children: null },
   render: () => (
     <div style={{ width: '480px' }}>
       <Tabs defaultValue="profile">
         <Tabs.List aria-label="Account settings" style={listStyle}>
           {(['profile', 'security', 'notifications'] as const).map((v) => (
-            <Tabs.Trigger key={v} value={v}>
-              {(args: { 'aria-selected': boolean }) => (
-                <span style={triggerStyle(args['aria-selected'])}>
-                  {v.charAt(0).toUpperCase() + v.slice(1)}
-                </span>
-              )}
+            <Tabs.Trigger key={v} value={v} style={triggerStyle(false)}>
+              {v.charAt(0).toUpperCase() + v.slice(1)}
             </Tabs.Trigger>
           ))}
         </Tabs.List>
@@ -70,6 +67,7 @@ export const Default: Story = {
 };
 
 export const Vertical: Story = {
+  args: { children: null },
   render: () => (
     <div style={{ display: 'flex', gap: '24px', width: '480px' }}>
       <Tabs defaultValue="a" orientation="vertical">

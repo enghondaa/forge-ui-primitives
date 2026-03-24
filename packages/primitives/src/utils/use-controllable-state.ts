@@ -1,9 +1,9 @@
 import { useCallback, useRef, useState } from 'react';
 
 type UseControllableStateParams<T> = {
-  value?: T;
-  defaultValue?: T;
-  onChange?: (value: T) => void;
+  value?: T | undefined;
+  defaultValue?: T | undefined;
+  onChange?: ((value: T) => void) | undefined;
 };
 
 /**

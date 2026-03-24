@@ -46,8 +46,8 @@ export function getFocusBounds(container: HTMLElement): {
 export function createFocusTrap(
   container: HTMLElement,
   options: {
-    initialFocus?: HTMLElement | null;
-    returnFocus?: HTMLElement | null;
+    initialFocus?: HTMLElement | null | undefined;
+    returnFocus?: HTMLElement | null | undefined;
   } = {},
 ): () => void {
   const { initialFocus, returnFocus } = options;

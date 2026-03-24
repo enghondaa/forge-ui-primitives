@@ -30,11 +30,11 @@ function useTabsContext(name: string): TabsContextValue {
 
 
 export interface TabsRootProps {
-  value?: string;
-  defaultValue?: string;
-  onValueChange?: (value: string) => void;
+  value?: string | undefined;
+  defaultValue?: string | undefined;
+  onValueChange?: ((value: string) => void) | undefined;
   /** @default 'horizontal' */
-  orientation?: 'horizontal' | 'vertical';
+  orientation?: 'horizontal' | 'vertical' | undefined;
   children: ReactNode;
 }
 

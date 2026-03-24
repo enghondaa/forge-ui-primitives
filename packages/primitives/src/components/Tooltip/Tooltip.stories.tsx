@@ -34,6 +34,7 @@ const tooltipStyle: React.CSSProperties = {
 };
 
 export const Default: Story = {
+  args: { children: null },
   render: () => (
     <Tooltip delayDuration={300}>
       <Tooltip.Trigger

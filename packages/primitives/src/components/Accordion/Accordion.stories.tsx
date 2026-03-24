@@ -63,6 +63,7 @@ const panelStyle: React.CSSProperties = {
 };
 
 export const Single: Story = {
+  args: { type: 'single', children: null },
   render: () => (
     <div style={{ width: '480px', border: '1px solid #e9ecef', borderRadius: '8px', overflow: 'hidden' }}>
       <Accordion type="single" collapsible>
@@ -80,6 +81,7 @@ export const Single: Story = {
 };
 
 export const Multiple: Story = {
+  args: { type: 'multiple', children: null },
   render: () => (
     <div style={{ width: '480px', border: '1px solid #e9ecef', borderRadius: '8px', overflow: 'hidden' }}>
       <Accordion type="multiple">

@@ -53,14 +53,14 @@ function useComboboxContext(name: string): ComboboxContextValue {
 
 export interface ComboboxRootProps {
   options: ComboboxOption[];
-  value?: string | null;
-  onValueChange?: (value: string | null) => void;
+  value?: string | null | undefined;
+  onValueChange?: ((value: string | null) => void) | undefined;
   /** For async search — called on every input change. */
-  onInputChange?: (value: string) => void;
+  onInputChange?: ((value: string) => void) | undefined;
   /** Defaults to case-insensitive label match. */
-  filterFn?: (option: ComboboxOption, inputValue: string) => boolean;
+  filterFn?: ((option: ComboboxOption, inputValue: string) => boolean) | undefined;
   /** @default 300 */
-  debounceMs?: number;
+  debounceMs?: number | undefined;
   children: ReactNode;
 }
 
@@ -285,7 +285,7 @@ export const ComboboxInput = forwardRef<HTMLInputElement, ComboboxInputProps>(
 ComboboxInput.displayName = 'Combobox.Input';
 
 
-interface ComboboxPortalProps {
+export interface ComboboxPortalProps {
   children: ReactNode;
   container?: HTMLElement;
 }

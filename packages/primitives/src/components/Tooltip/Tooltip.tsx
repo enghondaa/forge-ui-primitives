@@ -110,7 +110,7 @@ export const TooltipTrigger = forwardRef<HTMLButtonElement, TooltipTriggerProps>
 TooltipTrigger.displayName = 'Tooltip.Trigger';
 
 
-interface TooltipPortalProps {
+export interface TooltipPortalProps {
   children: ReactNode;
   container?: HTMLElement;
 }

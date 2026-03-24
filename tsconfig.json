@@ -24,6 +24,6 @@
     "allowImportingTsExtensions": false,
     "noEmit": true
   },
-  "include": ["packages/*/src/**/*", ".storybook/**/*"],
+  "include": ["packages/*/src/**/*", ".storybook/**/*", "vitest.setup.ts"],
   "exclude": ["node_modules", "dist", "build", "**/dist/**"]
 }

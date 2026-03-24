@@ -76,11 +76,11 @@ export const DropdownRoot: FC<DropdownRootProps> = ({
 
   useEffect(() => {
     if (!open) return;
-    function handleKeyDown(e: KeyboardEvent) {
-      if (e.key === Keys.Escape) onClose();
+    function handleKeyDown(e: Event) {
+      if ((e as globalThis.KeyboardEvent).key === Keys.Escape) onClose();
     }
-    document.addEventListener('keydown', handleKeyDown as EventListener);
-    return () => document.removeEventListener('keydown', handleKeyDown as EventListener);
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
   }, [open, onClose]);
 
   return (
@@ -152,7 +152,7 @@ export const DropdownTrigger = forwardRef<HTMLButtonElement, DropdownTriggerProp
 DropdownTrigger.displayName = 'Dropdown.Trigger';
 
 
-interface DropdownPortalProps {
+export interface DropdownPortalProps {
   children: ReactNode;
   container?: HTMLElement;
 }

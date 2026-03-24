@@ -2,10 +2,10 @@ import { forwardRef, type ComponentPropsWithoutRef } from 'react';
 import { useControllableState } from '../../utils/use-controllable-state';
 
 export interface ToggleProps extends Omit<ComponentPropsWithoutRef<'button'>, 'onChange'> {
-  pressed?: boolean;
-  defaultPressed?: boolean;
-  onPressedChange?: (pressed: boolean) => void;
-  disabled?: boolean;
+  pressed?: boolean | undefined;
+  defaultPressed?: boolean | undefined;
+  onPressedChange?: ((pressed: boolean) => void) | undefined;
+  disabled?: boolean | undefined;
 }
 
 export const Toggle = forwardRef<HTMLButtonElement, ToggleProps>(

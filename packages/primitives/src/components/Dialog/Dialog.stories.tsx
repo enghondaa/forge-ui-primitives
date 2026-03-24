@@ -37,6 +37,7 @@ const contentStyle: React.CSSProperties = {
 };
 
 export const Default: Story = {
+  args: { children: null },
   render: () => (
     <Dialog>
       <Dialog.Trigger
@@ -93,6 +94,7 @@ export const Default: Story = {
 };
 
 export const Controlled: Story = {
+  args: { children: null },
   render: () => {
     const [open, setOpen] = useState(false);
     return (

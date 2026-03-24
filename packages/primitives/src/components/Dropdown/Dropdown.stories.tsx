@@ -47,6 +47,7 @@ const separatorStyle: React.CSSProperties = {
 };
 
 export const Default: Story = {
+  args: { children: null },
   render: () => (
     <Dropdown>
       <Dropdown.Trigger
