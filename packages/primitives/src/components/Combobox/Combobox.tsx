@@ -14,9 +14,8 @@ import {
 } from 'react';
 import { createPortal } from 'react-dom';
 import { Keys } from '../../utils/keyboard';
-import { useOutsideClick } from '../../utils/use-outside-click';
 
-// ─── Types ───────────────────────────────────────────────────────────────────
+
 
 export interface ComboboxOption {
   value: string;
@@ -24,7 +23,6 @@ export interface ComboboxOption {
   disabled?: boolean;
 }
 
-// ─── Context ─────────────────────────────────────────────────────────────────
 
 interface ComboboxContextValue {
   inputValue: string;
@@ -52,23 +50,16 @@ function useComboboxContext(name: string): ComboboxContextValue {
   return ctx;
 }
 
-// ─── Root ─────────────────────────────────────────────────────────────────────
 
 export interface ComboboxRootProps {
-  /** All available options. */
   options: ComboboxOption[];
-  /** Currently selected value (controlled). */
   value?: string | null;
-  /** Fired when selection changes. */
   onValueChange?: (value: string | null) => void;
-  /** Fired when input value changes (for async search). */
+  /** For async search — called on every input change. */
   onInputChange?: (value: string) => void;
-  /**
-   * Custom filter function. Defaults to case-insensitive label match.
-   * Return `true` to include the option.
-   */
+  /** Defaults to case-insensitive label match. */
   filterFn?: (option: ComboboxOption, inputValue: string) => boolean;
-  /** Debounce delay for onInputChange (ms). @default 300 */
+  /** @default 300 */
   debounceMs?: number;
   children: ReactNode;
 }
@@ -135,7 +126,7 @@ export const ComboboxRoot: FC<ComboboxRootProps> = ({
     [isControlled, onValueChange],
   );
 
-  // Sync input display when controlled value changes externally
+  // Keep display in sync when controlled value changes from outside
   useEffect(() => {
     if (isControlled && controlledValue) {
       const opt = options.find((o) => o.value === controlledValue);
@@ -143,10 +134,19 @@ export const ComboboxRoot: FC<ComboboxRootProps> = ({
     }
   }, [controlledValue, isControlled, options]);
 
-  // Close on outside click
-  useOutsideClick(containerRef, () => setOpen(false), open);
+  // Close when clicking outside both the container and the portal listbox
+  useEffect(() => {
+    if (!open) return;
+    function handleMouseDown(e: MouseEvent) {
+      const target = e.target as Node;
+      if (containerRef.current?.contains(target)) return;
+      if (listRef.current?.contains(target)) return;
+      setOpen(false);
+    }
+    document.addEventListener('mousedown', handleMouseDown);
+    return () => document.removeEventListener('mousedown', handleMouseDown);
+  }, [open]);
 
-  // Cleanup debounce
   useEffect(() => () => clearTimeout(debounceTimer.current), []);
 
   return (
@@ -176,7 +176,6 @@ export const ComboboxRoot: FC<ComboboxRootProps> = ({
 
 ComboboxRoot.displayName = 'Combobox';
 
-// ─── Input ────────────────────────────────────────────────────────────────────
 
 export type ComboboxInputProps = Omit<ComponentPropsWithoutRef<'input'>, 'onChange'> & {
   placeholder?: string;
@@ -285,7 +284,6 @@ export const ComboboxInput = forwardRef<HTMLInputElement, ComboboxInputProps>(
 
 ComboboxInput.displayName = 'Combobox.Input';
 
-// ─── Portal ───────────────────────────────────────────────────────────────────
 
 interface ComboboxPortalProps {
   children: ReactNode;
@@ -300,7 +298,6 @@ export const ComboboxPortal: FC<ComboboxPortalProps> = ({ children, container })
 
 ComboboxPortal.displayName = 'Combobox.Portal';
 
-// ─── Listbox ──────────────────────────────────────────────────────────────────
 
 export type ComboboxListboxProps = ComponentPropsWithoutRef<'ul'>;
 
@@ -321,7 +318,6 @@ export const ComboboxListbox = forwardRef<HTMLUListElement, ComboboxListboxProps
 
 ComboboxListbox.displayName = 'Combobox.Listbox';
 
-// ─── Option ───────────────────────────────────────────────────────────────────
 
 export interface ComboboxOptionItemProps extends Omit<ComponentPropsWithoutRef<'li'>, 'value'> {
   value: string;
@@ -333,9 +329,12 @@ export const ComboboxOptionItem = forwardRef<HTMLLIElement, ComboboxOptionItemPr
   ({ value, label, index, onClick, ...props }, ref) => {
     const { selectedValue, activeIndex, getOptionId, onSelect, filteredOptions } =
       useComboboxContext('Combobox.Option');
+
+    const filteredIndex = filteredOptions.findIndex((o) => o.value === value);
+    if (filteredIndex === -1) return null;
+
     const isSelected = selectedValue === value;
-    const isActive = activeIndex === index;
-    const option = filteredOptions[index];
+    const isActive = activeIndex === filteredIndex;
 
     return (
       <li
@@ -346,7 +345,7 @@ export const ComboboxOptionItem = forwardRef<HTMLLIElement, ComboboxOptionItemPr
         data-active={isActive || undefined}
         onClick={(e) => {
           onClick?.(e);
-          if (option) onSelect(option);
+          onSelect(filteredOptions[filteredIndex]!);
         }}
         {...props}
       >
@@ -358,7 +357,6 @@ export const ComboboxOptionItem = forwardRef<HTMLLIElement, ComboboxOptionItemPr
 
 ComboboxOptionItem.displayName = 'Combobox.Option';
 
-// ─── Empty ────────────────────────────────────────────────────────────────────
 
 export interface ComboboxEmptyProps extends ComponentPropsWithoutRef<'li'> {}
 
@@ -370,7 +368,6 @@ export const ComboboxEmpty = forwardRef<HTMLLIElement, ComboboxEmptyProps>((prop
 
 ComboboxEmpty.displayName = 'Combobox.Empty';
 
-// ─── Compound Export ─────────────────────────────────────────────────────────
 
 export const Combobox = Object.assign(ComboboxRoot, {
   Input: ComboboxInput,

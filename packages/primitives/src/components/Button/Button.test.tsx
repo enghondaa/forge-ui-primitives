@@ -55,7 +55,7 @@ describe('Button', () => {
 
     it('sets aria-disabled (not disabled attr) when rendered as a non-button element', () => {
       render(<Button as="div" isDisabled>Disabled</Button>);
-      const el = screen.getByRole('button', { hidden: true });
+      const el = screen.getByText('Disabled');
       expect(el).toHaveAttribute('aria-disabled', 'true');
       expect(el).not.toHaveAttribute('disabled');
     });

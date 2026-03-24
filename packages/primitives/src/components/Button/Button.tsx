@@ -1,22 +1,11 @@
 import { forwardRef, type ElementType, type ForwardedRef } from 'react';
 import type { PolymorphicProps } from '../../utils/types';
 
-// ─── Types ───────────────────────────────────────────────────────────────────
-
 export interface ButtonOwnProps {
-  /**
-   * Whether the button is in a loading state.
-   * Sets aria-disabled and prevents click events when true.
-   */
+  /** Sets aria-disabled and prevents clicks when true. */
   isLoading?: boolean;
-  /**
-   * Whether the button is disabled.
-   */
   isDisabled?: boolean;
-  /**
-   * Accessible label for the loading state, read by screen readers.
-   * @default "Loading…"
-   */
+  /** Screen reader label shown during loading. @default "Loading…" */
   loadingLabel?: string;
 }
 
@@ -25,27 +14,6 @@ export type ButtonProps<TElement extends ElementType = 'button'> = PolymorphicPr
   ButtonOwnProps
 >;
 
-// ─── Component ───────────────────────────────────────────────────────────────
-
-/**
- * A polymorphic, headless Button primitive.
- *
- * - Supports rendering as any HTML element or React component via the `as` prop.
- * - Handles loading states with proper ARIA attributes.
- * - Prevents interaction when disabled or loading without hiding from the accessibility tree.
- *
- * @example
- * // Render as a button (default)
- * <Button onClick={handleClick}>Click me</Button>
- *
- * @example
- * // Render as an anchor
- * <Button as="a" href="/home">Go home</Button>
- *
- * @example
- * // Loading state
- * <Button isLoading loadingLabel="Saving…">Save</Button>
- */
 function ButtonInner<TElement extends ElementType = 'button'>(
   {
     as,
@@ -72,12 +40,12 @@ function ButtonInner<TElement extends ElementType = 'button'>(
   return (
     <Component
       ref={ref}
-      // For native buttons, use the disabled attribute; for other elements use aria-disabled
+      // Native buttons get `disabled`; everything else gets aria-disabled
       {...(Component === 'button'
         ? { disabled: isInert }
         : {
             'aria-disabled': isInert || undefined,
-            tabIndex: isInert ? -1 : undefined,
+            tabIndex: isInert ? -1 : 0,
           })}
       aria-busy={isLoading || undefined}
       aria-label={isLoading ? loadingLabel : undefined}
