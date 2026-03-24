@@ -8,7 +8,7 @@ const meta = {
     layout: 'centered',
     docs: {
       description: {
-        component: 'A two-state toggle button with `aria-pressed` for accessibility.',
+        component: 'Two-state toggle button using aria-pressed.',
       },
     },
   },

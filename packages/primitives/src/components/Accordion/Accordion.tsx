@@ -13,11 +13,10 @@ import { Keys } from '../../utils/keyboard';
 import { useControllableState } from '../../utils/use-controllable-state';
 import { useId } from '../../utils/use-id';
 
-// ─── Types ───────────────────────────────────────────────────────────────────
 
 export type AccordionType = 'single' | 'multiple';
 
-// Discriminated union for single vs. multiple selection
+// Discriminated union so TS can narrow single vs. multiple at the call site
 export type AccordionRootProps =
   | {
       type: 'single';
@@ -36,7 +35,6 @@ export type AccordionRootProps =
       children: ReactNode;
     };
 
-// ─── Context ─────────────────────────────────────────────────────────────────
 
 interface AccordionContextValue {
   isExpanded: (value: string) => boolean;
@@ -52,7 +50,6 @@ function useAccordionContext(name: string): AccordionContextValue {
   return ctx;
 }
 
-// ─── Item Context ─────────────────────────────────────────────────────────────
 
 interface AccordionItemContextValue {
   value: string;
@@ -69,7 +66,6 @@ function useAccordionItemContext(name: string): AccordionItemContextValue {
   return ctx;
 }
 
-// ─── Root ─────────────────────────────────────────────────────────────────────
 
 export const AccordionRoot: FC<AccordionRootProps> = (props) => {
   const baseId = useId('accordion');
@@ -145,7 +141,6 @@ function MultipleAccordion({
   );
 }
 
-// ─── Item ─────────────────────────────────────────────────────────────────────
 
 export interface AccordionItemProps extends ComponentPropsWithoutRef<'div'> {
   value: string;
@@ -173,7 +168,6 @@ export const AccordionItem = forwardRef<HTMLDivElement, AccordionItemProps>(
 
 AccordionItem.displayName = 'Accordion.Item';
 
-// ─── Trigger ─────────────────────────────────────────────────────────────────
 
 export type AccordionTriggerProps = ComponentPropsWithoutRef<'button'>;
 
@@ -230,10 +224,9 @@ export const AccordionTrigger = forwardRef<HTMLButtonElement, AccordionTriggerPr
 
 AccordionTrigger.displayName = 'Accordion.Trigger';
 
-// ─── Panel ────────────────────────────────────────────────────────────────────
 
 export interface AccordionPanelProps extends ComponentPropsWithoutRef<'div'> {
-  /** Keep the panel mounted (hidden) even when collapsed. @default false */
+  /** @default false */
   forceMount?: boolean;
 }
 
@@ -259,7 +252,6 @@ export const AccordionPanel = forwardRef<HTMLDivElement, AccordionPanelProps>(
 
 AccordionPanel.displayName = 'Accordion.Panel';
 
-// ─── Compound Export ─────────────────────────────────────────────────────────
 
 export const Accordion = Object.assign(AccordionRoot, {
   Item: AccordionItem,

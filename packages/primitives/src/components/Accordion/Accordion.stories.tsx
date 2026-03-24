@@ -8,16 +8,7 @@ const meta = {
     layout: 'centered',
     docs: {
       description: {
-        component: `
-An accessible Accordion following the [ARIA Accordion Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/accordion/).
-
-## Features
-- Single or multiple open items
-- Collapsible mode for single type
-- Keyboard navigation (Arrow keys, Home, End)
-- Proper \`aria-expanded\`, \`role="region"\`, \`aria-labelledby\`
-- Controlled and uncontrolled modes
-        `,
+        component: 'Single or multi-open accordion sections.',
       },
     },
   },

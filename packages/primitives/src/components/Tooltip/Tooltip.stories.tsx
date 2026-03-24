@@ -8,14 +8,7 @@ const meta = {
     layout: 'centered',
     docs: {
       description: {
-        component: `
-An accessible Tooltip primitive that shows on hover and focus.
-
-- Uses \`role="tooltip"\` and \`aria-describedby\` for screen reader support
-- Configurable show/hide delays
-- Closes on Escape key
-- Keyboard accessible (shows on focus)
-        `,
+        component: 'Hover/focus tooltip with configurable show/hide delay.',
       },
     },
   },

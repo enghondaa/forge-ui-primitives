@@ -8,15 +8,7 @@ const meta = {
     layout: 'centered',
     docs: {
       description: {
-        component: `
-An accessible Tabs primitive following the [ARIA Tabs Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/).
-
-## Features
-- Roving tabindex keyboard navigation (Arrow keys, Home, End)
-- Controlled and uncontrolled modes
-- Horizontal and vertical orientation
-- Proper \`role="tab"\`, \`role="tablist"\`, \`role="tabpanel"\` ARIA roles
-        `,
+        component: 'Keyboard-navigable tabs with roving tabindex.',
       },
     },
   },

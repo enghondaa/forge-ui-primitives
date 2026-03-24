@@ -8,26 +8,7 @@ const meta = {
     layout: 'centered',
     docs: {
       description: {
-        component: `
-A polymorphic, headless Button primitive with zero styling opinions.
-
-## Features
-- Renders as any HTML element via the \`as\` prop (polymorphic)
-- Proper ARIA attributes for loading and disabled states
-- Prevents interaction when disabled or loading
-- Forwards refs to the underlying element
-
-## Usage
-
-\`\`\`tsx
-import { Button } from '@forge-ui/primitives/button';
-
-// Apply your own styles
-const MyButton = (props) => (
-  <Button className="bg-blue-500 text-white px-4 py-2 rounded" {...props} />
-);
-\`\`\`
-        `,
+        component: 'Polymorphic button with loading/disabled states and full ARIA support.',
       },
     },
   },

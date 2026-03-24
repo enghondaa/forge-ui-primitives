@@ -16,7 +16,6 @@ import { useControllableState } from '../../utils/use-controllable-state';
 import { useId } from '../../utils/use-id';
 import { useOutsideClick } from '../../utils/use-outside-click';
 
-// ─── Context ─────────────────────────────────────────────────────────────────
 
 interface DropdownContextValue {
   open: boolean;
@@ -38,7 +37,6 @@ function useDropdownContext(name: string): DropdownContextValue {
   return ctx;
 }
 
-// ─── Root ─────────────────────────────────────────────────────────────────────
 
 export interface DropdownRootProps {
   open?: boolean;
@@ -74,10 +72,8 @@ export const DropdownRoot: FC<DropdownRootProps> = ({
     requestAnimationFrame(() => triggerRef.current?.focus());
   }, [setOpen, setActiveIndex]);
 
-  // Close on outside click
   useOutsideClick(menuRef, onClose, open);
 
-  // Close on Escape
   useEffect(() => {
     if (!open) return;
     function handleKeyDown(e: KeyboardEvent) {
@@ -108,7 +104,6 @@ export const DropdownRoot: FC<DropdownRootProps> = ({
 
 DropdownRoot.displayName = 'Dropdown';
 
-// ─── Trigger ─────────────────────────────────────────────────────────────────
 
 export type DropdownTriggerProps = ComponentPropsWithoutRef<'button'>;
 
@@ -156,7 +151,6 @@ export const DropdownTrigger = forwardRef<HTMLButtonElement, DropdownTriggerProp
 
 DropdownTrigger.displayName = 'Dropdown.Trigger';
 
-// ─── Portal ───────────────────────────────────────────────────────────────────
 
 interface DropdownPortalProps {
   children: ReactNode;
@@ -171,7 +165,6 @@ export const DropdownPortal: FC<DropdownPortalProps> = ({ children, container })
 
 DropdownPortal.displayName = 'Dropdown.Portal';
 
-// ─── Content ─────────────────────────────────────────────────────────────────
 
 export type DropdownContentProps = ComponentPropsWithoutRef<'div'>;
 
@@ -184,9 +177,9 @@ export const DropdownContent = forwardRef<HTMLDivElement, DropdownContentProps>(
       onKeyDown?.(e);
       const items = getMenuItems(menuRef.current);
       const currentIndex = items.findIndex((item) => item === document.activeElement);
-      // RTL: swap ArrowLeft/ArrowRight semantics; vertical menus are always LTR-independent
+      // TODO: wire up RTL for horizontal sub-menus when we add them
       const dir = document.documentElement.dir === 'rtl' ? -1 : 1;
-      void dir; // reserved for horizontal sub-menu support
+      void dir;
 
       if (e.key === Keys.ArrowDown) {
         e.preventDefault();
@@ -228,10 +221,8 @@ export const DropdownContent = forwardRef<HTMLDivElement, DropdownContentProps>(
 
 DropdownContent.displayName = 'Dropdown.Content';
 
-// ─── Item ─────────────────────────────────────────────────────────────────────
 
 export interface DropdownItemProps extends ComponentPropsWithoutRef<'div'> {
-  /** Prevents the menu from closing when this item is clicked. */
   keepOpen?: boolean;
   disabled?: boolean;
 }
@@ -273,7 +264,6 @@ export const DropdownItem = forwardRef<HTMLDivElement, DropdownItemProps>(
 
 DropdownItem.displayName = 'Dropdown.Item';
 
-// ─── Separator ────────────────────────────────────────────────────────────────
 
 export type DropdownSeparatorProps = ComponentPropsWithoutRef<'div'>;
 
@@ -283,7 +273,6 @@ export const DropdownSeparator = forwardRef<HTMLDivElement, DropdownSeparatorPro
 
 DropdownSeparator.displayName = 'Dropdown.Separator';
 
-// ─── Label ────────────────────────────────────────────────────────────────────
 
 export type DropdownLabelProps = ComponentPropsWithoutRef<'div'>;
 
@@ -293,7 +282,6 @@ export const DropdownLabel = forwardRef<HTMLDivElement, DropdownLabelProps>(
 
 DropdownLabel.displayName = 'Dropdown.Label';
 
-// ─── Helpers ──────────────────────────────────────────────────────────────────
 
 function getMenuItems(menu: HTMLElement | null): HTMLElement[] {
   if (!menu) return [];
@@ -302,7 +290,6 @@ function getMenuItems(menu: HTMLElement | null): HTMLElement[] {
   );
 }
 
-// ─── Compound Export ─────────────────────────────────────────────────────────
 
 export const Dropdown = Object.assign(DropdownRoot, {
   Trigger: DropdownTrigger,

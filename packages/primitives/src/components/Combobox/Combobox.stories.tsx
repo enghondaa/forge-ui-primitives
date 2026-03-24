@@ -9,16 +9,7 @@ const meta = {
     layout: 'centered',
     docs: {
       description: {
-        component: `
-An accessible Combobox/Autocomplete following the [ARIA Combobox Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/).
-
-## Features
-- Full keyboard navigation (Arrow keys, Enter, Escape, Home, End)
-- Controlled and uncontrolled modes
-- Async search support with configurable debounce
-- Custom filter function
-- Proper \`role="combobox"\`, \`aria-expanded\`, \`aria-activedescendant\` ARIA attributes
-        `,
+        component: 'Autocomplete combobox with filtering and async search.',
       },
     },
   },

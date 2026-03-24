@@ -17,7 +17,6 @@ import { mergeRefs } from '../../utils/merge-refs';
 import { useControllableState } from '../../utils/use-controllable-state';
 import { useId } from '../../utils/use-id';
 
-// ─── Context ─────────────────────────────────────────────────────────────────
 
 interface DialogContextValue {
   open: boolean;
@@ -36,23 +35,18 @@ function useDialogContext(componentName: string): DialogContextValue {
   return ctx;
 }
 
-// ─── Types ───────────────────────────────────────────────────────────────────
 
 export interface DialogRootProps {
-  /** Whether the dialog is open. */
   open?: boolean;
-  /** Default open state (uncontrolled). */
   defaultOpen?: boolean;
-  /** Callback fired when the dialog should close. */
   onOpenChange?: (open: boolean) => void;
-  /** Whether pressing Escape closes the dialog. @default true */
+  /** @default true */
   closeOnEscape?: boolean;
-  /** Whether clicking the overlay closes the dialog. @default true */
+  /** @default true */
   closeOnOverlayClick?: boolean;
   children: ReactNode;
 }
 
-// ─── Root ─────────────────────────────────────────────────────────────────────
 
 export const DialogRoot: FC<DialogRootProps> = ({
   open: controlledOpen,
@@ -73,7 +67,7 @@ export const DialogRoot: FC<DialogRootProps> = ({
 
   const onClose = useCallback(() => setOpen(false), [setOpen]);
 
-  // Prevent body scroll when open
+  // TODO: consider using a scroll-lock lib for iOS Safari edge cases
   useEffect(() => {
     if (!open) return;
     const original = document.body.style.overflow;
@@ -83,7 +77,6 @@ export const DialogRoot: FC<DialogRootProps> = ({
     };
   }, [open]);
 
-  // Close on Escape
   useEffect(() => {
     if (!open || !closeOnEscape) return;
     function handleKeyDown(e: KeyboardEvent) {
@@ -102,7 +95,6 @@ export const DialogRoot: FC<DialogRootProps> = ({
 
 DialogRoot.displayName = 'Dialog';
 
-// ─── Trigger ─────────────────────────────────────────────────────────────────
 
 export interface DialogTriggerProps extends ComponentPropsWithoutRef<'button'> {}
 
@@ -133,19 +125,13 @@ export const DialogTrigger = forwardRef<HTMLButtonElement, DialogTriggerProps>(
 
 DialogTrigger.displayName = 'Dialog.Trigger';
 
-// ─── Portal ───────────────────────────────────────────────────────────────────
 
 interface DialogPortalProps {
   children: ReactNode;
-  /** The DOM node to portal into. Defaults to document.body. */
   container?: HTMLElement | null;
 }
 
-/**
- * Lazy-mounts the portal content — nothing is added to the DOM until the
- * dialog is first opened. This avoids layout/style recalculations for
- * dialogs that may never be opened in a session.
- */
+/** Lazy-mounts so dialogs that never open don't touch the DOM. */
 export const DialogPortal: FC<DialogPortalProps> = ({ children, container }) => {
   const { open } = useDialogContext('Dialog.Portal');
   if (!open) return null;
@@ -154,7 +140,6 @@ export const DialogPortal: FC<DialogPortalProps> = ({ children, container }) => 
 
 DialogPortal.displayName = 'Dialog.Portal';
 
-// ─── Overlay ─────────────────────────────────────────────────────────────────
 
 export interface DialogOverlayProps extends ComponentPropsWithoutRef<'div'> {}
 
@@ -181,7 +166,6 @@ export const DialogOverlay = forwardRef<HTMLDivElement, DialogOverlayProps>(
 
 DialogOverlay.displayName = 'Dialog.Overlay';
 
-// ─── Content ─────────────────────────────────────────────────────────────────
 
 export interface DialogContentProps extends ComponentPropsWithoutRef<'div'> {
   /** Element to focus when dialog opens. Defaults to first focusable element. */
@@ -194,7 +178,6 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
     const contentRef = useRef<HTMLDivElement>(null);
     const ref = mergeRefs(forwardedRef, contentRef);
 
-    // Set up focus trap
     useEffect(() => {
       const el = contentRef.current;
       if (!el) return;
@@ -221,7 +204,6 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
 
 DialogContent.displayName = 'Dialog.Content';
 
-// ─── Title ────────────────────────────────────────────────────────────────────
 
 export type DialogTitleProps = ComponentPropsWithoutRef<'h2'>;
 
@@ -232,7 +214,6 @@ export const DialogTitle = forwardRef<HTMLHeadingElement, DialogTitleProps>((pro
 
 DialogTitle.displayName = 'Dialog.Title';
 
-// ─── Description ─────────────────────────────────────────────────────────────
 
 export type DialogDescriptionProps = ComponentPropsWithoutRef<'p'>;
 
@@ -245,7 +226,6 @@ export const DialogDescription = forwardRef<HTMLParagraphElement, DialogDescript
 
 DialogDescription.displayName = 'Dialog.Description';
 
-// ─── Close ────────────────────────────────────────────────────────────────────
 
 export type DialogCloseProps = ComponentPropsWithoutRef<'button'>;
 
@@ -266,7 +246,6 @@ export const DialogClose = forwardRef<HTMLButtonElement, DialogCloseProps>(
 
 DialogClose.displayName = 'Dialog.Close';
 
-// ─── Compound Export ─────────────────────────────────────────────────────────
 
 export const Dialog = Object.assign(DialogRoot, {
   Trigger: DialogTrigger,

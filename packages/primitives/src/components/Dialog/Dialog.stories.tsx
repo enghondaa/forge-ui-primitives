@@ -9,38 +9,7 @@ const meta = {
     layout: 'centered',
     docs: {
       description: {
-        component: `
-A fully accessible Dialog/Modal primitive with focus trap, scroll lock, and ARIA attributes.
-
-## Features
-- Focus trap — keyboard focus is confined within the dialog
-- Scroll lock — prevents body scroll while open
-- Closes on Escape key
-- Proper ARIA roles and attributes (\`role="dialog"\`, \`aria-modal\`, \`aria-labelledby\`)
-- Compound component API for maximum flexibility
-
-## Usage
-
-\`\`\`tsx
-import { Dialog } from '@forge-ui/primitives/dialog';
-
-function MyModal() {
-  return (
-    <Dialog>
-      <Dialog.Trigger>Open</Dialog.Trigger>
-      <Dialog.Portal>
-        <Dialog.Overlay className="overlay" />
-        <Dialog.Content className="content">
-          <Dialog.Title>Title</Dialog.Title>
-          <Dialog.Description>Description</Dialog.Description>
-          <Dialog.Close>Close</Dialog.Close>
-        </Dialog.Content>
-      </Dialog.Portal>
-    </Dialog>
-  );
-}
-\`\`\`
-        `,
+        component: 'Modal dialog with focus trap, scroll lock, and Escape-to-close.',
       },
     },
   },

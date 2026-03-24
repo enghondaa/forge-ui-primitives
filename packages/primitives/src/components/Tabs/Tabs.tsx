@@ -12,7 +12,6 @@ import { Keys } from '../../utils/keyboard';
 import { useControllableState } from '../../utils/use-controllable-state';
 import { useId } from '../../utils/use-id';
 
-// ─── Context ─────────────────────────────────────────────────────────────────
 
 interface TabsContextValue {
   selectedValue: string | undefined;
@@ -29,16 +28,12 @@ function useTabsContext(name: string): TabsContextValue {
   return ctx;
 }
 
-// ─── Root ─────────────────────────────────────────────────────────────────────
 
 export interface TabsRootProps {
-  /** The currently selected tab value (controlled). */
   value?: string;
-  /** The default selected tab value (uncontrolled). */
   defaultValue?: string;
-  /** Fired when the selected tab changes. */
   onValueChange?: (value: string) => void;
-  /** Layout orientation of the tab list. @default 'horizontal' */
+  /** @default 'horizontal' */
   orientation?: 'horizontal' | 'vertical';
   children: ReactNode;
 }
@@ -68,7 +63,6 @@ export const TabsRoot: FC<TabsRootProps> = ({
 
 TabsRoot.displayName = 'Tabs';
 
-// ─── Tab List ─────────────────────────────────────────────────────────────────
 
 export type TabsListProps = ComponentPropsWithoutRef<'div'>;
 
@@ -117,10 +111,8 @@ export const TabsList = forwardRef<HTMLDivElement, TabsListProps>(
 
 TabsList.displayName = 'Tabs.List';
 
-// ─── Tab ─────────────────────────────────────────────────────────────────────
 
 export interface TabsTriggerProps extends ComponentPropsWithoutRef<'button'> {
-  /** Unique value that identifies this tab. */
   value: string;
 }
 
@@ -150,12 +142,10 @@ export const TabsTrigger = forwardRef<HTMLButtonElement, TabsTriggerProps>(
 
 TabsTrigger.displayName = 'Tabs.Trigger';
 
-// ─── Tab Panel ────────────────────────────────────────────────────────────────
 
 export interface TabsPanelProps extends ComponentPropsWithoutRef<'div'> {
-  /** Must match the value of the corresponding `<Tabs.Trigger>`. */
   value: string;
-  /** Whether to keep the panel in the DOM when not selected. @default false */
+  /** @default false */
   forceMount?: boolean;
 }
 
@@ -182,7 +172,6 @@ export const TabsPanel = forwardRef<HTMLDivElement, TabsPanelProps>(
 
 TabsPanel.displayName = 'Tabs.Panel';
 
-// ─── Compound Export ─────────────────────────────────────────────────────────
 
 export const Tabs = Object.assign(TabsRoot, {
   List: TabsList,

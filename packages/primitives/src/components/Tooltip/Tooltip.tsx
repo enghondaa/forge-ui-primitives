@@ -13,7 +13,6 @@ import {
 import { createPortal } from 'react-dom';
 import { useId } from '../../utils/use-id';
 
-// ─── Context ─────────────────────────────────────────────────────────────────
 
 interface TooltipContextValue {
   open: boolean;
@@ -31,12 +30,11 @@ function useTooltipContext(name: string): TooltipContextValue {
   return ctx;
 }
 
-// ─── Root ─────────────────────────────────────────────────────────────────────
 
 export interface TooltipRootProps {
-  /** Delay before tooltip appears (ms). @default 700 */
+  /** @default 700 */
   delayDuration?: number;
-  /** Delay before tooltip hides after pointer leaves (ms). @default 300 */
+  /** @default 300 */
   skipDelayDuration?: number;
   children: ReactNode;
 }
@@ -62,7 +60,6 @@ export const TooltipRoot: FC<TooltipRootProps> = ({
     hideTimer.current = setTimeout(() => setOpen(false), skipDelayDuration);
   }, [skipDelayDuration]);
 
-  // Close on Escape
   useEffect(() => {
     if (!open) return;
     function handleKeyDown(e: KeyboardEvent) {
@@ -72,7 +69,6 @@ export const TooltipRoot: FC<TooltipRootProps> = ({
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [open]);
 
-  // Cleanup timers
   useEffect(() => {
     return () => {
       clearTimeout(showTimer.current);
@@ -89,7 +85,6 @@ export const TooltipRoot: FC<TooltipRootProps> = ({
 
 TooltipRoot.displayName = 'Tooltip';
 
-// ─── Trigger ─────────────────────────────────────────────────────────────────
 
 export interface TooltipTriggerProps extends ComponentPropsWithoutRef<'button'> {}
 
@@ -114,7 +109,6 @@ export const TooltipTrigger = forwardRef<HTMLButtonElement, TooltipTriggerProps>
 
 TooltipTrigger.displayName = 'Tooltip.Trigger';
 
-// ─── Portal ───────────────────────────────────────────────────────────────────
 
 interface TooltipPortalProps {
   children: ReactNode;
@@ -129,7 +123,6 @@ export const TooltipPortal: FC<TooltipPortalProps> = ({ children, container }) =
 
 TooltipPortal.displayName = 'Tooltip.Portal';
 
-// ─── Content ─────────────────────────────────────────────────────────────────
 
 export type TooltipContentProps = ComponentPropsWithoutRef<'div'>;
 
@@ -149,7 +142,6 @@ export const TooltipContent = forwardRef<HTMLDivElement, TooltipContentProps>((p
 
 TooltipContent.displayName = 'Tooltip.Content';
 
-// ─── Compound Export ─────────────────────────────────────────────────────────
 
 export const Tooltip = Object.assign(TooltipRoot, {
   Trigger: TooltipTrigger,

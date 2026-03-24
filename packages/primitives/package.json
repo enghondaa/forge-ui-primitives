@@ -11,17 +11,17 @@
     "unstyled",
     "components"
   ],
-  "homepage": "https://github.com/yourusername/forge-ui-primitives#readme",
+  "homepage": "https://github.com/enghondaa/forge-ui-primitives#readme",
   "bugs": {
-    "url": "https://github.com/yourusername/forge-ui-primitives/issues"
+    "url": "https://github.com/enghondaa/forge-ui-primitives/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/forge-ui-primitives",
+    "url": "https://github.com/enghondaa/forge-ui-primitives",
     "directory": "packages/primitives"
   },
   "license": "MIT",
-  "author": "Your Name <you@example.com>",
+  "author": "Mohand <eng.mohand2389@gmail.com>",
   "sideEffects": false,
   "type": "module",
   "exports": {

@@ -8,16 +8,7 @@ const meta = {
     layout: 'centered',
     docs: {
       description: {
-        component: `
-An accessible Dropdown Menu following the [ARIA Menu Button Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/).
-
-## Features
-- Full keyboard navigation (Arrow keys, Home, End, Escape)
-- Closes on outside click and Escape
-- Proper \`role="menu"\` and \`role="menuitem"\` ARIA attributes
-- Disabled item support
-- Separator and label grouping
-        `,
+        component: 'Dropdown menu with full keyboard navigation.',
       },
     },
   },
