@@ -49,9 +49,7 @@ export const Default: Story = {
         Hover or focus me
       </Tooltip.Trigger>
       <Tooltip.Portal>
-        <Tooltip.Content style={tooltipStyle}>
-          This is a tooltip!
-        </Tooltip.Content>
+        <Tooltip.Content style={tooltipStyle}>This is a tooltip!</Tooltip.Content>
       </Tooltip.Portal>
     </Tooltip>
   ),

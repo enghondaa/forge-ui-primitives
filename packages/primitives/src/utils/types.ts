@@ -8,9 +8,7 @@ export type RequireKeys<T, K extends keyof T> = Omit<T, K> & Required<Pick<T, K>
 /**
  * Utility type that makes all properties optional recursively.
  */
-export type DeepPartial<T> = T extends object
-  ? { [P in keyof T]?: DeepPartial<T[P]> }
-  : T;
+export type DeepPartial<T> = T extends object ? { [P in keyof T]?: DeepPartial<T[P]> } : T;
 
 /**
  * Polymorphic component props. Allows rendering a component as a different element.
@@ -35,16 +33,12 @@ export type PolymorphicRef<TElement extends ElementType> =
 /**
  * Discriminated union helper for component state.
  */
-export type OpenState =
-  | { open: true; onClose: () => void }
-  | { open: false; onOpen: () => void };
+export type OpenState = { open: true; onClose: () => void } | { open: false; onOpen: () => void };
 
 /**
  * Callback that may or may not receive an event argument.
  */
-export type MaybeEventCallback<T = void> = T extends void
-  ? () => void
-  : (event: T) => void;
+export type MaybeEventCallback<T = void> = T extends void ? () => void : (event: T) => void;
 
 /**
  * Extract the inner type from a ref object.

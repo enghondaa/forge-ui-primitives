@@ -16,7 +16,6 @@ import { useControllableState } from '../../utils/use-controllable-state';
 import { useId } from '../../utils/use-id';
 import { useOutsideClick } from '../../utils/use-outside-click';
 
-
 interface DropdownContextValue {
   open: boolean;
   triggerId: string;
@@ -36,7 +35,6 @@ function useDropdownContext(name: string): DropdownContextValue {
   if (!ctx) throw new Error(`\`${name}\` must be inside a \`<Dropdown>\`.`);
   return ctx;
 }
-
 
 export interface DropdownRootProps {
   open?: boolean;
@@ -104,7 +102,6 @@ export const DropdownRoot: FC<DropdownRootProps> = ({
 
 DropdownRoot.displayName = 'Dropdown';
 
-
 export type DropdownTriggerProps = ComponentPropsWithoutRef<'button'>;
 
 export const DropdownTrigger = forwardRef<HTMLButtonElement, DropdownTriggerProps>(
@@ -151,7 +148,6 @@ export const DropdownTrigger = forwardRef<HTMLButtonElement, DropdownTriggerProp
 
 DropdownTrigger.displayName = 'Dropdown.Trigger';
 
-
 export interface DropdownPortalProps {
   children: ReactNode;
   container?: HTMLElement | undefined;
@@ -164,7 +160,6 @@ export const DropdownPortal: FC<DropdownPortalProps> = ({ children, container })
 };
 
 DropdownPortal.displayName = 'Dropdown.Portal';
-
 
 export type DropdownContentProps = ComponentPropsWithoutRef<'div'>;
 
@@ -222,7 +217,6 @@ export const DropdownContent = forwardRef<HTMLDivElement, DropdownContentProps>(
 
 DropdownContent.displayName = 'Dropdown.Content';
 
-
 export interface DropdownItemProps extends ComponentPropsWithoutRef<'div'> {
   keepOpen?: boolean;
   disabled?: boolean;
@@ -265,7 +259,6 @@ export const DropdownItem = forwardRef<HTMLDivElement, DropdownItemProps>(
 
 DropdownItem.displayName = 'Dropdown.Item';
 
-
 export type DropdownSeparatorProps = ComponentPropsWithoutRef<'div'>;
 
 export const DropdownSeparator = forwardRef<HTMLDivElement, DropdownSeparatorProps>(
@@ -274,15 +267,13 @@ export const DropdownSeparator = forwardRef<HTMLDivElement, DropdownSeparatorPro
 
 DropdownSeparator.displayName = 'Dropdown.Separator';
 
-
 export type DropdownLabelProps = ComponentPropsWithoutRef<'div'>;
 
-export const DropdownLabel = forwardRef<HTMLDivElement, DropdownLabelProps>(
-  (props, ref) => <div ref={ref} role="group" aria-label={props['aria-label']} {...props} />,
-);
+export const DropdownLabel = forwardRef<HTMLDivElement, DropdownLabelProps>((props, ref) => (
+  <div ref={ref} role="group" aria-label={props['aria-label']} {...props} />
+));
 
 DropdownLabel.displayName = 'Dropdown.Label';
-
 
 function getMenuItems(menu: HTMLElement | null): HTMLElement[] {
   if (!menu) return [];
@@ -290,7 +281,6 @@ function getMenuItems(menu: HTMLElement | null): HTMLElement[] {
     menu.querySelectorAll<HTMLElement>('[role="menuitem"]:not([aria-disabled="true"])'),
   );
 }
-
 
 export const Dropdown = Object.assign(DropdownRoot, {
   Trigger: DropdownTrigger,

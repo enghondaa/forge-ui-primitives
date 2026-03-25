@@ -106,13 +106,14 @@ export const AsyncSearch: Story = {
     const [loading, setLoading] = useState(false);
 
     async function handleInputChange(query: string) {
-      if (!query) { setOptions([]); return; }
+      if (!query) {
+        setOptions([]);
+        return;
+      }
       setLoading(true);
       // Simulate async API call
       await new Promise((r) => setTimeout(r, 400));
-      setOptions(
-        fruits.filter((f) => f.label.toLowerCase().includes(query.toLowerCase())),
-      );
+      setOptions(fruits.filter((f) => f.label.toLowerCase().includes(query.toLowerCase())));
       setLoading(false);
     }
 
@@ -122,7 +123,9 @@ export const AsyncSearch: Story = {
         <Combobox.Portal>
           <Combobox.Listbox style={listStyle}>
             {loading ? (
-              <li style={{ padding: '8px 12px', color: '#999', fontSize: '14px', listStyle: 'none' }}>
+              <li
+                style={{ padding: '8px 12px', color: '#999', fontSize: '14px', listStyle: 'none' }}
+              >
                 Loading…
               </li>
             ) : (

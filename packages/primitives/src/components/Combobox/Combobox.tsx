@@ -15,14 +15,11 @@ import {
 import { createPortal } from 'react-dom';
 import { Keys } from '../../utils/keyboard';
 
-
-
 export interface ComboboxOption {
   value: string;
   label: string;
   disabled?: boolean;
 }
-
 
 interface ComboboxContextValue {
   inputValue: string;
@@ -49,7 +46,6 @@ function useComboboxContext(name: string): ComboboxContextValue {
   if (!ctx) throw new Error(`\`${name}\` must be inside a \`<Combobox>\`.`);
   return ctx;
 }
-
 
 export interface ComboboxRootProps {
   options: ComboboxOption[];
@@ -97,9 +93,7 @@ export const ComboboxRoot: FC<ComboboxRootProps> = ({
   const isControlled = controlledValue !== undefined;
   const selectedVal = isControlled ? (controlledValue ?? null) : selectedValue;
 
-  const filteredOptions = options.filter(
-    (opt) => !opt.disabled && filterFn(opt, inputValue),
-  );
+  const filteredOptions = options.filter((opt) => !opt.disabled && filterFn(opt, inputValue));
 
   function setInputValue(v: string) {
     setInputValueRaw(v);
@@ -175,7 +169,6 @@ export const ComboboxRoot: FC<ComboboxRootProps> = ({
 };
 
 ComboboxRoot.displayName = 'Combobox';
-
 
 export type ComboboxInputProps = Omit<ComponentPropsWithoutRef<'input'>, 'onChange'> & {
   placeholder?: string;
@@ -284,7 +277,6 @@ export const ComboboxInput = forwardRef<HTMLInputElement, ComboboxInputProps>(
 
 ComboboxInput.displayName = 'Combobox.Input';
 
-
 export interface ComboboxPortalProps {
   children: ReactNode;
   container?: HTMLElement;
@@ -298,26 +290,14 @@ export const ComboboxPortal: FC<ComboboxPortalProps> = ({ children, container })
 
 ComboboxPortal.displayName = 'Combobox.Portal';
 
-
 export type ComboboxListboxProps = ComponentPropsWithoutRef<'ul'>;
 
-export const ComboboxListbox = forwardRef<HTMLUListElement, ComboboxListboxProps>(
-  (props, _ref) => {
-    const { listboxId, inputId, listRef } = useComboboxContext('Combobox.Listbox');
-    return (
-      <ul
-        ref={listRef}
-        id={listboxId}
-        role="listbox"
-        aria-labelledby={inputId}
-        {...props}
-      />
-    );
-  },
-);
+export const ComboboxListbox = forwardRef<HTMLUListElement, ComboboxListboxProps>((props, _ref) => {
+  const { listboxId, inputId, listRef } = useComboboxContext('Combobox.Listbox');
+  return <ul ref={listRef} id={listboxId} role="listbox" aria-labelledby={inputId} {...props} />;
+});
 
 ComboboxListbox.displayName = 'Combobox.Listbox';
-
 
 export interface ComboboxOptionItemProps extends Omit<ComponentPropsWithoutRef<'li'>, 'value'> {
   value: string;
@@ -362,7 +342,6 @@ export const ComboboxOptionItem = forwardRef<HTMLLIElement, ComboboxOptionItemPr
 
 ComboboxOptionItem.displayName = 'Combobox.Option';
 
-
 export type ComboboxEmptyProps = ComponentPropsWithoutRef<'li'>;
 
 export const ComboboxEmpty = forwardRef<HTMLLIElement, ComboboxEmptyProps>((props, ref) => {
@@ -372,7 +351,6 @@ export const ComboboxEmpty = forwardRef<HTMLLIElement, ComboboxEmptyProps>((prop
 });
 
 ComboboxEmpty.displayName = 'Combobox.Empty';
-
 
 export const Combobox = Object.assign(ComboboxRoot, {
   Input: ComboboxInput,

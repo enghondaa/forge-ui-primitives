@@ -16,7 +16,6 @@ import { mergeRefs } from '../../utils/merge-refs';
 import { useControllableState } from '../../utils/use-controllable-state';
 import { useId } from '../../utils/use-id';
 
-
 interface DialogContextValue {
   open: boolean;
   titleId: string;
@@ -35,7 +34,6 @@ function useDialogContext(componentName: string): DialogContextValue {
   return ctx;
 }
 
-
 export interface DialogRootProps {
   open?: boolean | undefined;
   defaultOpen?: boolean | undefined;
@@ -46,7 +44,6 @@ export interface DialogRootProps {
   closeOnOverlayClick?: boolean | undefined;
   children: ReactNode;
 }
-
 
 export const DialogRoot: FC<DialogRootProps> = ({
   open: controlledOpen,
@@ -95,7 +92,6 @@ export const DialogRoot: FC<DialogRootProps> = ({
 
 DialogRoot.displayName = 'Dialog';
 
-
 export type DialogTriggerProps = ComponentPropsWithoutRef<'button'>;
 
 export const DialogTrigger = forwardRef<HTMLButtonElement, DialogTriggerProps>(
@@ -125,7 +121,6 @@ export const DialogTrigger = forwardRef<HTMLButtonElement, DialogTriggerProps>(
 
 DialogTrigger.displayName = 'Dialog.Trigger';
 
-
 export interface DialogPortalProps {
   children: ReactNode;
   container?: HTMLElement | null;
@@ -140,7 +135,6 @@ export const DialogPortal: FC<DialogPortalProps> = ({ children, container }) => 
 
 DialogPortal.displayName = 'Dialog.Portal';
 
-
 export type DialogOverlayProps = ComponentPropsWithoutRef<'div'>;
 
 export const DialogOverlay = forwardRef<HTMLDivElement, DialogOverlayProps>(
@@ -152,20 +146,11 @@ export const DialogOverlay = forwardRef<HTMLDivElement, DialogOverlayProps>(
       if (closeOnOverlayClick && e.target === e.currentTarget) onClose();
     }
 
-    return (
-      <div
-        ref={ref}
-        aria-hidden="true"
-        data-state="open"
-        onClick={handleClick}
-        {...props}
-      />
-    );
+    return <div ref={ref} aria-hidden="true" data-state="open" onClick={handleClick} {...props} />;
   },
 );
 
 DialogOverlay.displayName = 'Dialog.Overlay';
-
 
 export interface DialogContentProps extends ComponentPropsWithoutRef<'div'> {
   /** Element to focus when dialog opens. Defaults to first focusable element. */
@@ -204,18 +189,20 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
 
 DialogContent.displayName = 'Dialog.Content';
 
-
 export type DialogTitleProps = ComponentPropsWithoutRef<'h2'>;
 
 export const DialogTitle = forwardRef<HTMLHeadingElement, DialogTitleProps>(
   ({ children, ...props }, ref) => {
     const { titleId } = useDialogContext('Dialog.Title');
-    return <h2 ref={ref} id={titleId} {...props}>{children}</h2>;
+    return (
+      <h2 ref={ref} id={titleId} {...props}>
+        {children}
+      </h2>
+    );
   },
 );
 
 DialogTitle.displayName = 'Dialog.Title';
-
 
 export type DialogDescriptionProps = ComponentPropsWithoutRef<'p'>;
 
@@ -227,7 +214,6 @@ export const DialogDescription = forwardRef<HTMLParagraphElement, DialogDescript
 );
 
 DialogDescription.displayName = 'Dialog.Description';
-
 
 export type DialogCloseProps = ComponentPropsWithoutRef<'button'>;
 
@@ -247,7 +233,6 @@ export const DialogClose = forwardRef<HTMLButtonElement, DialogCloseProps>(
 );
 
 DialogClose.displayName = 'Dialog.Close';
-
 
 export const Dialog = Object.assign(DialogRoot, {
   Trigger: DialogTrigger,

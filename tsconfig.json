@@ -24,6 +24,11 @@
     "allowImportingTsExtensions": false,
     "noEmit": true
   },
-  "include": ["packages/*/src/**/*", ".storybook/**/*", "vitest.setup.ts", "packages/*/tsup.config.ts"],
+  "include": [
+    "packages/*/src/**/*",
+    ".storybook/**/*",
+    "vitest.setup.ts",
+    "packages/*/tsup.config.ts"
+  ],
   "exclude": ["node_modules", "dist", "build", "**/dist/**"]
 }

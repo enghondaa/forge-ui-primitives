@@ -65,13 +65,18 @@ const panelStyle: React.CSSProperties = {
 export const Single: Story = {
   args: { type: 'single', children: null },
   render: () => (
-    <div style={{ width: '480px', border: '1px solid #e9ecef', borderRadius: '8px', overflow: 'hidden' }}>
+    <div
+      style={{
+        width: '480px',
+        border: '1px solid #e9ecef',
+        borderRadius: '8px',
+        overflow: 'hidden',
+      }}
+    >
       <Accordion type="single" collapsible>
         {items.map(({ value, question, answer }) => (
           <Accordion.Item key={value} value={value}>
-            <Accordion.Trigger style={triggerStyle}>
-              {question}
-            </Accordion.Trigger>
+            <Accordion.Trigger style={triggerStyle}>{question}</Accordion.Trigger>
             <Accordion.Panel style={panelStyle}>{answer}</Accordion.Panel>
           </Accordion.Item>
         ))}
@@ -83,7 +88,14 @@ export const Single: Story = {
 export const Multiple: Story = {
   args: { type: 'multiple', children: null },
   render: () => (
-    <div style={{ width: '480px', border: '1px solid #e9ecef', borderRadius: '8px', overflow: 'hidden' }}>
+    <div
+      style={{
+        width: '480px',
+        border: '1px solid #e9ecef',
+        borderRadius: '8px',
+        overflow: 'hidden',
+      }}
+    >
       <Accordion type="multiple">
         {items.map(({ value, question, answer }) => (
           <Accordion.Item key={value} value={value}>

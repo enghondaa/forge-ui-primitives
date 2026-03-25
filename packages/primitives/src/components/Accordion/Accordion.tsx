@@ -13,7 +13,6 @@ import { Keys } from '../../utils/keyboard';
 import { useControllableState } from '../../utils/use-controllable-state';
 import { useId } from '../../utils/use-id';
 
-
 export type AccordionType = 'single' | 'multiple';
 
 // Discriminated union so TS can narrow single vs. multiple at the call site
@@ -35,7 +34,6 @@ export type AccordionRootProps =
       children: ReactNode;
     };
 
-
 interface AccordionContextValue {
   isExpanded: (value: string) => boolean;
   toggle: (value: string) => void;
@@ -49,7 +47,6 @@ function useAccordionContext(name: string): AccordionContextValue {
   if (!ctx) throw new Error(`\`${name}\` must be inside a \`<Accordion>\`.`);
   return ctx;
 }
-
 
 interface AccordionItemContextValue {
   value: string;
@@ -65,7 +62,6 @@ function useAccordionItemContext(name: string): AccordionItemContextValue {
   if (!ctx) throw new Error(`\`${name}\` must be inside a \`<Accordion.Item>\`.`);
   return ctx;
 }
-
 
 export const AccordionRoot: FC<AccordionRootProps> = (props) => {
   const baseId = useId('accordion');
@@ -101,9 +97,7 @@ function SingleAccordion({
   );
 
   return (
-    <AccordionContext.Provider
-      value={{ isExpanded: (v) => v === value, toggle, baseId }}
-    >
+    <AccordionContext.Provider value={{ isExpanded: (v) => v === value, toggle, baseId }}>
       {children}
     </AccordionContext.Provider>
   );
@@ -133,14 +127,11 @@ function MultipleAccordion({
   );
 
   return (
-    <AccordionContext.Provider
-      value={{ isExpanded: (v) => values.includes(v), toggle, baseId }}
-    >
+    <AccordionContext.Provider value={{ isExpanded: (v) => values.includes(v), toggle, baseId }}>
       {children}
     </AccordionContext.Provider>
   );
 }
-
 
 export interface AccordionItemProps extends ComponentPropsWithoutRef<'div'> {
   value: string;
@@ -167,7 +158,6 @@ export const AccordionItem = forwardRef<HTMLDivElement, AccordionItemProps>(
 );
 
 AccordionItem.displayName = 'Accordion.Item';
-
 
 export type AccordionTriggerProps = ComponentPropsWithoutRef<'button'>;
 
@@ -225,7 +215,6 @@ export const AccordionTrigger = forwardRef<HTMLButtonElement, AccordionTriggerPr
 
 AccordionTrigger.displayName = 'Accordion.Trigger';
 
-
 export interface AccordionPanelProps extends ComponentPropsWithoutRef<'div'> {
   /** @default false */
   forceMount?: boolean;
@@ -252,7 +241,6 @@ export const AccordionPanel = forwardRef<HTMLDivElement, AccordionPanelProps>(
 );
 
 AccordionPanel.displayName = 'Accordion.Panel';
-
 
 export const Accordion = Object.assign(AccordionRoot, {
   Item: AccordionItem,

@@ -19,7 +19,12 @@ function TestCombobox({
   onInputChange?: (v: string) => void;
 }) {
   return (
-    <Combobox options={options} onValueChange={onValueChange} onInputChange={onInputChange} debounceMs={0}>
+    <Combobox
+      options={options}
+      onValueChange={onValueChange}
+      onInputChange={onInputChange}
+      debounceMs={0}
+    >
       <Combobox.Input placeholder="Search fruit…" data-testid="input" />
       <Combobox.Portal>
         <Combobox.Listbox data-testid="listbox">
@@ -59,7 +64,9 @@ describe('Combobox', () => {
       const user = userEvent.setup();
       render(<TestCombobox />);
       await user.type(screen.getByRole('combobox'), 'cher');
-      expect(screen.getAllByRole('option').filter(o => o.textContent !== 'No results found')).toHaveLength(1);
+      expect(
+        screen.getAllByRole('option').filter((o) => o.textContent !== 'No results found'),
+      ).toHaveLength(1);
       expect(screen.getByRole('option', { name: 'Cherry' })).toBeInTheDocument();
     });
 

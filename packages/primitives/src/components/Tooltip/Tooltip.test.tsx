@@ -24,24 +24,28 @@ describe('Tooltip', () => {
     act(() => {
       screen.getByRole('button', { name: 'Hover me' }).focus();
     });
-    await waitFor(() =>
-      expect(screen.getByRole('tooltip')).toBeInTheDocument(),
-    );
+    await waitFor(() => expect(screen.getByRole('tooltip')).toBeInTheDocument());
   });
 
   it('hides on blur', async () => {
     render(<TestTooltip />);
     const trigger = screen.getByRole('button', { name: 'Hover me' });
-    act(() => { trigger.focus(); });
+    act(() => {
+      trigger.focus();
+    });
     await waitFor(() => expect(screen.queryByRole('tooltip')).toBeInTheDocument());
-    act(() => { trigger.blur(); });
+    act(() => {
+      trigger.blur();
+    });
     await waitFor(() => expect(screen.queryByRole('tooltip')).not.toBeInTheDocument());
   });
 
   it('trigger has aria-describedby pointing to tooltip id', async () => {
     render(<TestTooltip />);
     const trigger = screen.getByRole('button', { name: 'Hover me' });
-    act(() => { trigger.focus(); });
+    act(() => {
+      trigger.focus();
+    });
     await waitFor(() => {
       const tooltip = screen.getByRole('tooltip');
       expect(trigger).toHaveAttribute('aria-describedby', tooltip.id);

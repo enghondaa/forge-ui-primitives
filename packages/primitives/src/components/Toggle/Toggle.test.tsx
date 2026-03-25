@@ -6,10 +6,7 @@ import { Toggle } from './Toggle';
 describe('Toggle', () => {
   it('starts unpressed by default', () => {
     render(<Toggle aria-label="Bold">B</Toggle>);
-    expect(screen.getByRole('button', { name: 'Bold' })).toHaveAttribute(
-      'aria-pressed',
-      'false',
-    );
+    expect(screen.getByRole('button', { name: 'Bold' })).toHaveAttribute('aria-pressed', 'false');
   });
 
   it('toggles pressed state on click', async () => {
@@ -25,7 +22,11 @@ describe('Toggle', () => {
   it('calls onPressedChange with new state', async () => {
     const user = userEvent.setup();
     const onPressedChange = vi.fn();
-    render(<Toggle aria-label="Bold" onPressedChange={onPressedChange}>B</Toggle>);
+    render(
+      <Toggle aria-label="Bold" onPressedChange={onPressedChange}>
+        B
+      </Toggle>,
+    );
     await user.click(screen.getByRole('button', { name: 'Bold' }));
     expect(onPressedChange).toHaveBeenCalledWith(true);
   });
@@ -33,7 +34,11 @@ describe('Toggle', () => {
   it('respects controlled pressed state', async () => {
     const user = userEvent.setup();
     const onPressedChange = vi.fn();
-    render(<Toggle aria-label="Bold" pressed={false} onPressedChange={onPressedChange}>B</Toggle>);
+    render(
+      <Toggle aria-label="Bold" pressed={false} onPressedChange={onPressedChange}>
+        B
+      </Toggle>,
+    );
     await user.click(screen.getByRole('button', { name: 'Bold' }));
     // Controlled — external value doesn't change
     expect(screen.getByRole('button')).toHaveAttribute('aria-pressed', 'false');
@@ -43,7 +48,11 @@ describe('Toggle', () => {
   it('does not toggle when disabled', async () => {
     const user = userEvent.setup();
     const onPressedChange = vi.fn();
-    render(<Toggle aria-label="Bold" disabled onPressedChange={onPressedChange}>B</Toggle>);
+    render(
+      <Toggle aria-label="Bold" disabled onPressedChange={onPressedChange}>
+        B
+      </Toggle>,
+    );
     await user.click(screen.getByRole('button', { name: 'Bold' }));
     expect(onPressedChange).not.toHaveBeenCalled();
   });

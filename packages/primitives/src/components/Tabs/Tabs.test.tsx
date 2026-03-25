@@ -35,14 +35,8 @@ describe('Tabs', () => {
   describe('accessibility', () => {
     it('marks selected tab with aria-selected="true"', () => {
       render(<TestTabs />);
-      expect(screen.getByRole('tab', { name: 'Tab A' })).toHaveAttribute(
-        'aria-selected',
-        'true',
-      );
-      expect(screen.getByRole('tab', { name: 'Tab B' })).toHaveAttribute(
-        'aria-selected',
-        'false',
-      );
+      expect(screen.getByRole('tab', { name: 'Tab A' })).toHaveAttribute('aria-selected', 'true');
+      expect(screen.getByRole('tab', { name: 'Tab B' })).toHaveAttribute('aria-selected', 'false');
     });
 
     it('active tab has tabIndex 0, others have -1', () => {

@@ -11,7 +11,11 @@ describe('Button', () => {
     });
 
     it('renders as a different element via the `as` prop', () => {
-      render(<Button as="a" href="/home">Home</Button>);
+      render(
+        <Button as="a" href="/home">
+          Home
+        </Button>,
+      );
       const link = screen.getByRole('link', { name: 'Home' });
       expect(link).toBeInTheDocument();
       expect(link).toHaveAttribute('href', '/home');
@@ -24,7 +28,11 @@ describe('Button', () => {
     });
 
     it('passes additional props to the underlying element', () => {
-      render(<Button data-testid="my-button" type="submit">Submit</Button>);
+      render(
+        <Button data-testid="my-button" type="submit">
+          Submit
+        </Button>,
+      );
       const btn = screen.getByTestId('my-button');
       expect(btn).toHaveAttribute('type', 'submit');
     });
@@ -44,7 +52,11 @@ describe('Button', () => {
     });
 
     it('sets aria-label to loadingLabel when loading', () => {
-      render(<Button isLoading loadingLabel="Saving changes…">Save</Button>);
+      render(
+        <Button isLoading loadingLabel="Saving changes…">
+          Save
+        </Button>,
+      );
       expect(screen.getByRole('button', { name: 'Saving changes…' })).toBeInTheDocument();
     });
 
@@ -54,7 +66,11 @@ describe('Button', () => {
     });
 
     it('sets aria-disabled (not disabled attr) when rendered as a non-button element', () => {
-      render(<Button as="div" isDisabled>Disabled</Button>);
+      render(
+        <Button as="div" isDisabled>
+          Disabled
+        </Button>,
+      );
       const el = screen.getByText('Disabled');
       expect(el).toHaveAttribute('aria-disabled', 'true');
       expect(el).not.toHaveAttribute('disabled');
@@ -73,7 +89,11 @@ describe('Button', () => {
     it('does not call onClick when disabled', async () => {
       const user = userEvent.setup();
       const handleClick = vi.fn();
-      render(<Button isDisabled onClick={handleClick}>Click</Button>);
+      render(
+        <Button isDisabled onClick={handleClick}>
+          Click
+        </Button>,
+      );
       await user.click(screen.getByRole('button'));
       expect(handleClick).not.toHaveBeenCalled();
     });
@@ -81,7 +101,11 @@ describe('Button', () => {
     it('does not call onClick when loading', async () => {
       const user = userEvent.setup();
       const handleClick = vi.fn();
-      render(<Button isLoading onClick={handleClick}>Click</Button>);
+      render(
+        <Button isLoading onClick={handleClick}>
+          Click
+        </Button>,
+      );
       await user.click(screen.getByRole('button'));
       expect(handleClick).not.toHaveBeenCalled();
     });

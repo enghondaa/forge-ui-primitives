@@ -12,7 +12,6 @@ import { Keys } from '../../utils/keyboard';
 import { useControllableState } from '../../utils/use-controllable-state';
 import { useId } from '../../utils/use-id';
 
-
 interface TabsContextValue {
   selectedValue: string | undefined;
   onSelect: (value: string) => void;
@@ -27,7 +26,6 @@ function useTabsContext(name: string): TabsContextValue {
   if (!ctx) throw new Error(`\`${name}\` must be inside a \`<Tabs>\`.`);
   return ctx;
 }
-
 
 export interface TabsRootProps {
   value?: string | undefined;
@@ -62,7 +60,6 @@ export const TabsRoot: FC<TabsRootProps> = ({
 };
 
 TabsRoot.displayName = 'Tabs';
-
 
 export type TabsListProps = ComponentPropsWithoutRef<'div'>;
 
@@ -112,7 +109,6 @@ export const TabsList = forwardRef<HTMLDivElement, TabsListProps>(
 
 TabsList.displayName = 'Tabs.List';
 
-
 export interface TabsTriggerProps extends ComponentPropsWithoutRef<'button'> {
   value: string;
 }
@@ -143,7 +139,6 @@ export const TabsTrigger = forwardRef<HTMLButtonElement, TabsTriggerProps>(
 
 TabsTrigger.displayName = 'Tabs.Trigger';
 
-
 export interface TabsPanelProps extends ComponentPropsWithoutRef<'div'> {
   value: string;
   /** @default false */
@@ -172,7 +167,6 @@ export const TabsPanel = forwardRef<HTMLDivElement, TabsPanelProps>(
 );
 
 TabsPanel.displayName = 'Tabs.Panel';
-
 
 export const Tabs = Object.assign(TabsRoot, {
   List: TabsList,

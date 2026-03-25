@@ -13,7 +13,6 @@ import {
 import { createPortal } from 'react-dom';
 import { useId } from '../../utils/use-id';
 
-
 interface TooltipContextValue {
   open: boolean;
   tooltipId: string;
@@ -29,7 +28,6 @@ function useTooltipContext(name: string): TooltipContextValue {
   if (!ctx) throw new Error(`\`${name}\` must be inside a \`<Tooltip>\`.`);
   return ctx;
 }
-
 
 export interface TooltipRootProps {
   /** @default 700 */
@@ -85,7 +83,6 @@ export const TooltipRoot: FC<TooltipRootProps> = ({
 
 TooltipRoot.displayName = 'Tooltip';
 
-
 export type TooltipTriggerProps = ComponentPropsWithoutRef<'button'>;
 
 export const TooltipTrigger = forwardRef<HTMLButtonElement, TooltipTriggerProps>(
@@ -97,10 +94,22 @@ export const TooltipTrigger = forwardRef<HTMLButtonElement, TooltipTriggerProps>
         ref={triggerRef as React.RefObject<HTMLButtonElement>}
         type="button"
         aria-describedby={tooltipId}
-        onMouseEnter={(e) => { onMouseEnter?.(e); show(); }}
-        onMouseLeave={(e) => { onMouseLeave?.(e); hide(); }}
-        onFocus={(e) => { onFocus?.(e); show(); }}
-        onBlur={(e) => { onBlur?.(e); hide(); }}
+        onMouseEnter={(e) => {
+          onMouseEnter?.(e);
+          show();
+        }}
+        onMouseLeave={(e) => {
+          onMouseLeave?.(e);
+          hide();
+        }}
+        onFocus={(e) => {
+          onFocus?.(e);
+          show();
+        }}
+        onBlur={(e) => {
+          onBlur?.(e);
+          hide();
+        }}
         {...props}
       />
     );
@@ -108,7 +117,6 @@ export const TooltipTrigger = forwardRef<HTMLButtonElement, TooltipTriggerProps>
 );
 
 TooltipTrigger.displayName = 'Tooltip.Trigger';
-
 
 export interface TooltipPortalProps {
   children: ReactNode;
@@ -123,25 +131,15 @@ export const TooltipPortal: FC<TooltipPortalProps> = ({ children, container }) =
 
 TooltipPortal.displayName = 'Tooltip.Portal';
 
-
 export type TooltipContentProps = ComponentPropsWithoutRef<'div'>;
 
 export const TooltipContent = forwardRef<HTMLDivElement, TooltipContentProps>((props, ref) => {
   const { tooltipId } = useTooltipContext('Tooltip.Content');
 
-  return (
-    <div
-      ref={ref}
-      id={tooltipId}
-      role="tooltip"
-      data-state="open"
-      {...props}
-    />
-  );
+  return <div ref={ref} id={tooltipId} role="tooltip" data-state="open" {...props} />;
 });
 
 TooltipContent.displayName = 'Tooltip.Content';
-
 
 export const Tooltip = Object.assign(TooltipRoot, {
   Trigger: TooltipTrigger,
