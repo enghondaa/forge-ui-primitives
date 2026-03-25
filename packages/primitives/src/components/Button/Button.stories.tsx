@@ -22,6 +22,7 @@ const meta = {
     isLoading: { control: 'boolean' },
     isDisabled: { control: 'boolean' },
     loadingLabel: { control: 'text' },
+    onClick: { action: 'clicked' },
   },
 } satisfies Meta<typeof Button>;
 

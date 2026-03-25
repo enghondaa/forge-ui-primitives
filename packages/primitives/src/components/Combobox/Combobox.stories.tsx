@@ -51,102 +51,124 @@ const listStyle: React.CSSProperties = {
   overflowY: 'auto',
   listStyle: 'none',
   margin: '4px 0 0',
-  position: 'fixed',
+  position: 'absolute',
   width: '280px',
   zIndex: 100,
 };
 
-const optionStyle = (isActive: boolean): React.CSSProperties => ({
+const optionBaseStyle: React.CSSProperties = {
   padding: '8px 12px',
   borderRadius: '4px',
   cursor: 'pointer',
   fontSize: '14px',
-  background: isActive ? '#f0f7ff' : 'transparent',
-});
+};
 
-export const Default: Story = {
-  args: { options: [], children: null },
-  render: () => {
-    const [value, setValue] = useState<string | null>(null);
-    return (
-      <div style={{ position: 'relative' }}>
-        {value && (
-          <p style={{ marginBottom: '8px', fontSize: '13px', color: '#666' }}>
-            Selected: <strong>{value}</strong>
-          </p>
-        )}
-        <Combobox options={fruits} onValueChange={setValue}>
-          <Combobox.Input placeholder="Search fruit…" style={inputStyle} />
-          <Combobox.Portal>
+function OptionItem({ opt, index }: { opt: ComboboxOption; index: number }) {
+  const [hovered, setHovered] = useState(false);
+  return (
+    <Combobox.Option
+      value={opt.value}
+      label={opt.label}
+      index={index}
+      style={{
+        ...optionBaseStyle,
+        background: hovered ? '#f0f7ff' : 'transparent',
+      }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    />
+  );
+}
+
+function DefaultDemo() {
+  const [value, setValue] = useState<string | null>(null);
+  const [container, setContainer] = useState<HTMLDivElement | null>(null);
+  return (
+    <div ref={setContainer} style={{ position: 'relative' }}>
+      {value && (
+        <p style={{ marginBottom: '8px', fontSize: '13px', color: '#666' }}>
+          Selected: <strong>{value}</strong>
+        </p>
+      )}
+      <Combobox options={fruits} onValueChange={setValue}>
+        <Combobox.Input placeholder="Search fruit…" style={inputStyle} />
+        {container && (
+          <Combobox.Portal container={container}>
             <Combobox.Listbox style={listStyle}>
               {fruits.map((opt, i) => (
-                <Combobox.Option
-                  key={opt.value}
-                  value={opt.value}
-                  label={opt.label}
-                  index={i}
-                  style={optionStyle(false)}
-                />
+                <OptionItem key={opt.value} opt={opt} index={i} />
               ))}
               <Combobox.Empty style={{ padding: '8px 12px', color: '#999', fontSize: '14px' }}>
                 No results found
               </Combobox.Empty>
             </Combobox.Listbox>
           </Combobox.Portal>
-        </Combobox>
-      </div>
-    );
-  },
+        )}
+      </Combobox>
+    </div>
+  );
+}
+
+function AsyncDemo() {
+  const [options, setOptions] = useState<ComboboxOption[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [container, setContainer] = useState<HTMLDivElement | null>(null);
+
+  async function handleInputChange(query: string) {
+    if (!query) {
+      setOptions([]);
+      return;
+    }
+    setLoading(true);
+    await new Promise((r) => setTimeout(r, 400));
+    setOptions(fruits.filter((f) => f.label.toLowerCase().includes(query.toLowerCase())));
+    setLoading(false);
+  }
+
+  return (
+    <div ref={setContainer} style={{ position: 'relative' }}>
+      <Combobox options={options} onInputChange={handleInputChange} debounceMs={300}>
+        <Combobox.Input placeholder="Type to search (async)…" style={inputStyle} />
+        {container && (
+          <Combobox.Portal container={container}>
+            <Combobox.Listbox style={listStyle}>
+              {loading ? (
+                <li
+                  style={{
+                    padding: '8px 12px',
+                    color: '#999',
+                    fontSize: '14px',
+                    listStyle: 'none',
+                  }}
+                >
+                  Loading…
+                </li>
+              ) : (
+                <>
+                  {options.map((opt, i) => (
+                    <OptionItem key={opt.value} opt={opt} index={i} />
+                  ))}
+                  <Combobox.Empty
+                    style={{ padding: '8px 12px', color: '#999', fontSize: '14px' }}
+                  >
+                    No results found
+                  </Combobox.Empty>
+                </>
+              )}
+            </Combobox.Listbox>
+          </Combobox.Portal>
+        )}
+      </Combobox>
+    </div>
+  );
+}
+
+export const Default: Story = {
+  args: { options: [], children: null },
+  render: () => <DefaultDemo />,
 };
 
 export const AsyncSearch: Story = {
   args: { options: [], children: null },
-  render: () => {
-    const [options, setOptions] = useState<ComboboxOption[]>([]);
-    const [loading, setLoading] = useState(false);
-
-    async function handleInputChange(query: string) {
-      if (!query) {
-        setOptions([]);
-        return;
-      }
-      setLoading(true);
-      // Simulate async API call
-      await new Promise((r) => setTimeout(r, 400));
-      setOptions(fruits.filter((f) => f.label.toLowerCase().includes(query.toLowerCase())));
-      setLoading(false);
-    }
-
-    return (
-      <Combobox options={options} onInputChange={handleInputChange} debounceMs={300}>
-        <Combobox.Input placeholder="Type to search (async)…" style={inputStyle} />
-        <Combobox.Portal>
-          <Combobox.Listbox style={listStyle}>
-            {loading ? (
-              <li
-                style={{ padding: '8px 12px', color: '#999', fontSize: '14px', listStyle: 'none' }}
-              >
-                Loading…
-              </li>
-            ) : (
-              <>
-                {options.map((opt, i) => (
-                  <Combobox.Option
-                    key={opt.value}
-                    value={opt.value}
-                    label={opt.label}
-                    index={i}
-                    style={optionStyle(false)}
-                  />
-                ))}
-                <Combobox.Empty style={{ padding: '8px 12px', color: '#999', fontSize: '14px' }}>
-                  No results found
-                </Combobox.Empty>
-              </>
-            )}
-          </Combobox.Listbox>
-        </Combobox.Portal>
-      </Combobox>
-    );
-  },
+  render: () => <AsyncDemo />,
 };

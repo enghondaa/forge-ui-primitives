@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { useState } from 'react';
 import { Tooltip } from './Tooltip';
 
 const meta = {
@@ -24,33 +25,43 @@ const tooltipStyle: React.CSSProperties = {
   padding: '6px 10px',
   borderRadius: '4px',
   fontSize: '13px',
-  position: 'fixed',
-  top: '50%',
+  position: 'absolute',
+  bottom: '100%',
   left: '50%',
-  transform: 'translate(-50%, calc(-50% - 40px))',
+  transform: 'translateX(-50%)',
+  marginBottom: '8px',
   whiteSpace: 'nowrap',
   pointerEvents: 'none',
   zIndex: 9999,
 };
 
+function TooltipDemo() {
+  const [container, setContainer] = useState<HTMLDivElement | null>(null);
+  return (
+    <div ref={setContainer} style={{ position: 'relative', display: 'inline-block' }}>
+      <Tooltip delayDuration={300}>
+        <Tooltip.Trigger
+          style={{
+            padding: '8px 16px',
+            border: '1px solid #dee2e6',
+            borderRadius: '6px',
+            background: '#fff',
+            cursor: 'pointer',
+          }}
+        >
+          Hover or focus me
+        </Tooltip.Trigger>
+        {container && (
+          <Tooltip.Portal container={container}>
+            <Tooltip.Content style={tooltipStyle}>This is a tooltip!</Tooltip.Content>
+          </Tooltip.Portal>
+        )}
+      </Tooltip>
+    </div>
+  );
+}
+
 export const Default: Story = {
   args: { children: null },
-  render: () => (
-    <Tooltip delayDuration={300}>
-      <Tooltip.Trigger
-        style={{
-          padding: '8px 16px',
-          border: '1px solid #dee2e6',
-          borderRadius: '6px',
-          background: '#fff',
-          cursor: 'pointer',
-        }}
-      >
-        Hover or focus me
-      </Tooltip.Trigger>
-      <Tooltip.Portal>
-        <Tooltip.Content style={tooltipStyle}>This is a tooltip!</Tooltip.Content>
-      </Tooltip.Portal>
-    </Tooltip>
-  ),
+  render: () => <TooltipDemo />,
 };

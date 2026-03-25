@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { useRef } from 'react';
 import { Dropdown } from './Dropdown';
 
 const meta = {
@@ -47,10 +46,10 @@ const separatorStyle: React.CSSProperties = {
   margin: '4px 0',
 };
 
-function DropdownDemo() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  return (
-    <div ref={containerRef} style={{ position: 'relative', display: 'inline-block' }}>
+export const Default: Story = {
+  args: { children: null },
+  render: () => (
+    <div style={{ position: 'relative', display: 'inline-block' }}>
       <Dropdown>
         <Dropdown.Trigger
           style={{
@@ -66,44 +65,37 @@ function DropdownDemo() {
         >
           Options &#9662;
         </Dropdown.Trigger>
-        <Dropdown.Portal container={containerRef.current ?? undefined}>
-          <Dropdown.Content style={menuStyle}>
-            <Dropdown.Item
-              style={itemStyle}
-              onMouseEnter={(e) => ((e.target as HTMLElement).style.background = '#f8f9fa')}
-              onMouseLeave={(e) => ((e.target as HTMLElement).style.background = 'transparent')}
-            >
-              Edit
-            </Dropdown.Item>
-            <Dropdown.Item
-              style={itemStyle}
-              onMouseEnter={(e) => ((e.target as HTMLElement).style.background = '#f8f9fa')}
-              onMouseLeave={(e) => ((e.target as HTMLElement).style.background = 'transparent')}
-            >
-              Duplicate
-            </Dropdown.Item>
-            <Dropdown.Item
-              style={itemStyle}
-              onMouseEnter={(e) => ((e.target as HTMLElement).style.background = '#f8f9fa')}
-              onMouseLeave={(e) => ((e.target as HTMLElement).style.background = 'transparent')}
-            >
-              Share
-            </Dropdown.Item>
-            <Dropdown.Separator style={separatorStyle} />
-            <Dropdown.Item
-              style={{ ...itemStyle, color: '#dc3545', opacity: 0.5, cursor: 'not-allowed' }}
-              disabled
-            >
-              Delete
-            </Dropdown.Item>
-          </Dropdown.Content>
-        </Dropdown.Portal>
+        <Dropdown.Content style={menuStyle}>
+          <Dropdown.Item
+            style={itemStyle}
+            onMouseEnter={(e) => ((e.target as HTMLElement).style.background = '#f8f9fa')}
+            onMouseLeave={(e) => ((e.target as HTMLElement).style.background = 'transparent')}
+          >
+            Edit
+          </Dropdown.Item>
+          <Dropdown.Item
+            style={itemStyle}
+            onMouseEnter={(e) => ((e.target as HTMLElement).style.background = '#f8f9fa')}
+            onMouseLeave={(e) => ((e.target as HTMLElement).style.background = 'transparent')}
+          >
+            Duplicate
+          </Dropdown.Item>
+          <Dropdown.Item
+            style={itemStyle}
+            onMouseEnter={(e) => ((e.target as HTMLElement).style.background = '#f8f9fa')}
+            onMouseLeave={(e) => ((e.target as HTMLElement).style.background = 'transparent')}
+          >
+            Share
+          </Dropdown.Item>
+          <Dropdown.Separator style={separatorStyle} />
+          <Dropdown.Item
+            style={{ ...itemStyle, color: '#dc3545', opacity: 0.5, cursor: 'not-allowed' }}
+            disabled
+          >
+            Delete
+          </Dropdown.Item>
+        </Dropdown.Content>
       </Dropdown>
     </div>
-  );
-}
-
-export const Default: Story = {
-  args: { children: null },
-  render: () => <DropdownDemo />,
+  ),
 };

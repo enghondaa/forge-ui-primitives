@@ -20,6 +20,7 @@ interface DialogContextValue {
   open: boolean;
   titleId: string;
   descriptionId: string;
+  onOpen: () => void;
   onClose: () => void;
   closeOnOverlayClick: boolean;
 }
@@ -62,6 +63,7 @@ export const DialogRoot: FC<DialogRootProps> = ({
     onChange: onOpenChange,
   });
 
+  const onOpen = useCallback(() => setOpen(true), [setOpen]);
   const onClose = useCallback(() => setOpen(false), [setOpen]);
 
   // TODO: consider using a scroll-lock lib for iOS Safari edge cases
@@ -84,7 +86,9 @@ export const DialogRoot: FC<DialogRootProps> = ({
   }, [open, closeOnEscape, onClose]);
 
   return (
-    <DialogContext.Provider value={{ open, titleId, descriptionId, onClose, closeOnOverlayClick }}>
+    <DialogContext.Provider
+      value={{ open, titleId, descriptionId, onOpen, onClose, closeOnOverlayClick }}
+    >
       {children}
     </DialogContext.Provider>
   );
@@ -100,9 +104,7 @@ export const DialogTrigger = forwardRef<HTMLButtonElement, DialogTriggerProps>(
 
     function handleClick(e: React.MouseEvent<HTMLButtonElement>) {
       onClick?.(e);
-      if (!ctx.open) {
-        // The parent controls opening; we just notify via aria-haspopup
-      }
+      ctx.onOpen();
     }
 
     return (
