@@ -14,6 +14,10 @@ const meta = {
     },
   },
   tags: ['autodocs'],
+  argTypes: {
+    closeOnEscape: { control: 'boolean' },
+    closeOnOverlayClick: { control: 'boolean' },
+  },
 } satisfies Meta<typeof Dialog>;
 
 export default meta;
@@ -37,9 +41,9 @@ const contentStyle: React.CSSProperties = {
 };
 
 export const Default: Story = {
-  args: { children: null },
-  render: () => (
-    <Dialog>
+  args: { children: null, closeOnEscape: true, closeOnOverlayClick: true },
+  render: (args) => (
+    <Dialog closeOnEscape={args.closeOnEscape} closeOnOverlayClick={args.closeOnOverlayClick}>
       <Dialog.Trigger
         style={{
           padding: '8px 16px',
@@ -73,7 +77,7 @@ export const Default: Story = {
               >
                 Cancel
               </Dialog.Close>
-              <button
+              <Dialog.Close
                 style={{
                   padding: '8px 16px',
                   background: '#dc3545',
@@ -84,7 +88,7 @@ export const Default: Story = {
                 }}
               >
                 Confirm
-              </button>
+              </Dialog.Close>
             </div>
           </Dialog.Content>
         </Dialog.Overlay>
@@ -94,15 +98,20 @@ export const Default: Story = {
 };
 
 export const Controlled: Story = {
-  args: { children: null },
-  render: () => {
+  args: { children: null, closeOnEscape: true, closeOnOverlayClick: true },
+  render: (args) => {
     const [open, setOpen] = useState(false);
     return (
       <div>
         <p style={{ marginBottom: '16px', color: '#666', fontSize: '14px' }}>
           Controlled: {open ? 'Open' : 'Closed'}
         </p>
-        <Dialog open={open} onOpenChange={setOpen}>
+        <Dialog
+          open={open}
+          onOpenChange={setOpen}
+          closeOnEscape={args.closeOnEscape}
+          closeOnOverlayClick={args.closeOnOverlayClick}
+        >
           <Dialog.Trigger
             style={{
               padding: '8px 16px',

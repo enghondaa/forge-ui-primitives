@@ -13,6 +13,9 @@ const meta = {
     },
   },
   tags: ['autodocs'],
+  argTypes: {
+    collapsible: { control: 'boolean' },
+  },
 } satisfies Meta<typeof Accordion>;
 
 export default meta;
@@ -63,8 +66,8 @@ const panelStyle: React.CSSProperties = {
 };
 
 export const Single: Story = {
-  args: { type: 'single', children: null },
-  render: () => (
+  args: { type: 'single', collapsible: true, children: null },
+  render: (args) => (
     <div
       style={{
         width: '480px',
@@ -73,7 +76,7 @@ export const Single: Story = {
         overflow: 'hidden',
       }}
     >
-      <Accordion type="single" collapsible>
+      <Accordion type="single" collapsible={args.collapsible ?? true}>
         {items.map(({ value, question, answer }) => (
           <Accordion.Item key={value} value={value}>
             <Accordion.Trigger style={triggerStyle}>{question}</Accordion.Trigger>

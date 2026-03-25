@@ -14,6 +14,9 @@ const meta = {
     },
   },
   tags: ['autodocs'],
+  argTypes: {
+    delayDuration: { control: { type: 'number', min: 0, max: 2000, step: 100 } },
+  },
 } satisfies Meta<typeof Tooltip>;
 
 export default meta;
@@ -35,11 +38,11 @@ const tooltipStyle: React.CSSProperties = {
   zIndex: 9999,
 };
 
-function TooltipDemo() {
+function TooltipDemo({ delayDuration = 300 }: { delayDuration?: number | undefined }) {
   const [container, setContainer] = useState<HTMLDivElement | null>(null);
   return (
     <div ref={setContainer} style={{ position: 'relative', display: 'inline-block' }}>
-      <Tooltip delayDuration={300}>
+      <Tooltip delayDuration={delayDuration}>
         <Tooltip.Trigger
           style={{
             padding: '8px 16px',
@@ -62,6 +65,6 @@ function TooltipDemo() {
 }
 
 export const Default: Story = {
-  args: { children: null },
-  render: () => <TooltipDemo />,
+  args: { children: null, delayDuration: 300 },
+  render: (args) => <TooltipDemo delayDuration={args.delayDuration} />,
 };

@@ -14,6 +14,9 @@ const meta = {
     },
   },
   tags: ['autodocs'],
+  argTypes: {
+    orientation: { control: 'radio', options: ['horizontal', 'vertical'] },
+  },
 } satisfies Meta<typeof Tabs>;
 
 export default meta;
@@ -37,7 +40,7 @@ const baseTriggerStyle: React.CSSProperties = {
 
 const tabValues = ['profile', 'security', 'notifications'] as const;
 
-function DefaultDemo() {
+function HorizontalDemo() {
   const [selected, setSelected] = useState<string>('profile');
   return (
     <div style={{ width: '480px' }}>
@@ -119,11 +122,11 @@ function VerticalDemo() {
 }
 
 export const Default: Story = {
-  args: { children: null },
-  render: () => <DefaultDemo />,
+  args: { children: null, orientation: 'horizontal' },
+  render: () => <HorizontalDemo />,
 };
 
 export const Vertical: Story = {
-  args: { children: null },
+  args: { children: null, orientation: 'vertical' },
   render: () => <VerticalDemo />,
 };

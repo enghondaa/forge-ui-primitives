@@ -37,16 +37,19 @@ export const Default: Story = {
     <Button
       style={{
         padding: '8px 16px',
-        background: '#0070f3',
+        background: args.isDisabled || args.isLoading ? '#6c757d' : '#0070f3',
         color: '#fff',
         border: 'none',
         borderRadius: '6px',
-        cursor: 'pointer',
+        cursor: args.isDisabled || args.isLoading ? 'not-allowed' : 'pointer',
         fontSize: '14px',
         fontWeight: 500,
+        opacity: args.isDisabled || args.isLoading ? 0.7 : 1,
       }}
       {...args}
-    />
+    >
+      {args.isLoading ? 'Loading…' : args.children}
+    </Button>
   ),
 };
 
