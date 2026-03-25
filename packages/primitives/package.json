@@ -26,49 +26,49 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
-      "require": "./dist/index.cjs",
-      "types": "./dist/index.d.ts"
+      "require": "./dist/index.cjs"
     },
     "./button": {
+      "types": "./dist/button.d.ts",
       "import": "./dist/button.js",
-      "require": "./dist/button.cjs",
-      "types": "./dist/button.d.ts"
+      "require": "./dist/button.cjs"
     },
     "./dialog": {
+      "types": "./dist/dialog.d.ts",
       "import": "./dist/dialog.js",
-      "require": "./dist/dialog.cjs",
-      "types": "./dist/dialog.d.ts"
+      "require": "./dist/dialog.cjs"
     },
     "./dropdown": {
+      "types": "./dist/dropdown.d.ts",
       "import": "./dist/dropdown.js",
-      "require": "./dist/dropdown.cjs",
-      "types": "./dist/dropdown.d.ts"
+      "require": "./dist/dropdown.cjs"
     },
     "./tabs": {
+      "types": "./dist/tabs.d.ts",
       "import": "./dist/tabs.js",
-      "require": "./dist/tabs.cjs",
-      "types": "./dist/tabs.d.ts"
+      "require": "./dist/tabs.cjs"
     },
     "./accordion": {
+      "types": "./dist/accordion.d.ts",
       "import": "./dist/accordion.js",
-      "require": "./dist/accordion.cjs",
-      "types": "./dist/accordion.d.ts"
+      "require": "./dist/accordion.cjs"
     },
     "./tooltip": {
+      "types": "./dist/tooltip.d.ts",
       "import": "./dist/tooltip.js",
-      "require": "./dist/tooltip.cjs",
-      "types": "./dist/tooltip.d.ts"
+      "require": "./dist/tooltip.cjs"
     },
     "./toggle": {
+      "types": "./dist/toggle.d.ts",
       "import": "./dist/toggle.js",
-      "require": "./dist/toggle.cjs",
-      "types": "./dist/toggle.d.ts"
+      "require": "./dist/toggle.cjs"
     },
     "./combobox": {
+      "types": "./dist/combobox.d.ts",
       "import": "./dist/combobox.js",
-      "require": "./dist/combobox.cjs",
-      "types": "./dist/combobox.d.ts"
+      "require": "./dist/combobox.cjs"
     }
   },
   "main": "./dist/index.cjs",
